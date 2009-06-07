@@ -226,6 +226,17 @@ class tx_pmkshadowbox_cache {
 
 		return $mergedContent;
 	}
+	
+	/**
+	 * Tests if a given file exists or not.
+	 *
+	 * @param string $content content
+	 * @param array $conf config 
+	 * @return boolean true if file exists
+	 */
+	public function fileExists($content,$conf) {
+		return @file_exists($this->cObj->stdWrap($conf['file'],$conf['file.']));
+	}
 }
 
 ?>

@@ -117,8 +117,8 @@ plugin.pmkshadowbox {
 	# cat=pmkshadowbox/file/f1; type=file[swf]; label= Videoplayer: The URL of the flash video player. Only needed when displaying Flash video content. Defaults to "EXT:pmkshadowbox/res/flvplayer.swf".
 	flvPlayer = EXT:pmkshadowbox/res/flvplayer.swf
 
-	# cat=pmkshadowbox/file/f2; type=options[classic=EXT:pmkshadowbox/res/build/skin/classic,classicCloseOnTop=EXT:pmkshadowbox/res/build/skin/classicCloseOnTop,concept=EXT:pmkshadowbox/res/build/skin/concept,infernal=EXT:pmkshadowbox/res/build/skin/infernal,nova=EXT:pmkshadowbox/res/build/skin/nova]; label= Path to skin folder: A Shadowbox skin is a directory of files that determine what Shadowbox will look like when it is displayed. The "classic" skin is included with the default distribution, and it is hoped that more skins will become available as third-party developers have some time to explore the Shadowbox code. Defaults to "classic" skin.
-	skinPath = EXT:pmkshadowbox/res/build/skin/classic
+	# cat=pmkshadowbox/file/f2; type=options[classic=EXT:pmkshadowbox/res/build/skins/classic,classicCloseOnTop=EXT:pmkshadowbox/res/build/skins/classicCloseOnTop,concept=EXT:pmkshadowbox/res/build/skins/concept,infernal=EXT:pmkshadowbox/res/build/skins/infernal,nova=EXT:pmkshadowbox/res/build/skins/nova]; label= Path to skin folder: A Shadowbox skin is a directory of files that determine what Shadowbox will look like when it is displayed. The "classic" skin is included with the default distribution, and it is hoped that more skins will become available as third-party developers have some time to explore the Shadowbox code. Defaults to "classic" skin.
+	skinPath = EXT:pmkshadowbox/res/build/skins/classic
 
 	# cat=pmkshadowbox/file/f3; type=file[js]; label= Javascript framework (optional): Enter path/name of javascript framework here, iIf you are using one of the following JavaScript frameworks: YUI, Ext, Prototype, jQuery, MooTools & Dojo Toolkit, as that library must be loaded before shadowbox.
 	jsFramework =
@@ -131,4 +131,16 @@ plugin.pmkshadowbox {
 	# cat=pmkshadowbox/color/c2; type=color; label= Flash BG color: The default background color to use for Flash movies. Defaults to "#000000".
 	flashBgColor = #000000
 
+
+
+# Additional 3.0b Options
+
+	# cat=pmkshadowbox/enable/eb; type=boolean; label= Auto dimensions: Set this true to automatically set the initialHeight and initialWidth automatically from the configured object's height and width. Defaults to false.
+	autoDimensions = 0
+
+	# cat=pmkshadowbox/enable/ec; type=boolean; label= Show overlay?:	Determines whether the overlay will be shown at all. Defaults to true.
+	showOverlay = 1
+	
+	# cat=pmkshadowbox/enable/ed; type=boolean; label= UseSizzle?: Set this false to disable loading the Sizzle.js CSS selector library. Note that if you choose not to use Sizzle you may not use CSS selectors to set up your links. Defaults to true.
+	useSizzle = 1
 }

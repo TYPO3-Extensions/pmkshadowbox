@@ -14,54 +14,6 @@ page.headerData.1230 {
 		if.isTrue.value = {$plugin.pmkshadowbox.jsFramework}
 	}
 
-	# Include the Base adapter script
-	# Note: This part might be different/changed if a special adapter is chosen.
-	# (See conditions later in this TS setup.)
-	2 = COA
-	2 {
-		wrap = <script type="text/javascript" src="|"></script>
-
-		10 = CASE
-		10 {
-			key = {$plugin.pmkshadowbox.adapter}
-			default = TEXT
-			default.dataWrap = {path:EXT:pmkshadowbox/res/build/adapter/shadowbox-base.js}
-
-			1 = TEXT
-			1.dataWrap = {path:EXT:pmkshadowbox/res/build/adapter/shadowbox-dojo.js}
-
-			2 = TEXT
-			2.dataWrap = {path:EXT:pmkshadowbox/res/build/adapter/shadowbox-ext.js}
-
-			3 = TEXT
-			3.dataWrap = {path:EXT:pmkshadowbox/res/build/adapter/shadowbox-mootools.js}
-
-			4 = TEXT
-			4.dataWrap = {path:EXT:pmkshadowbox/res/build/adapter/shadowbox-prototype.js}
-
-			5 = TEXT
-			5.dataWrap = {path:EXT:pmkshadowbox/res/build/adapter/shadowbox-yui.js}
-
-			6 = TEXT
-			6.dataWrap = {path:EXT:pmkshadowbox/res/build/adapter/shadowbox-jquery.js}
-		}
-	}
-
-	# Include javascript language file, based on selected FE language.
-	# If language file doesn't exists, fallback language is used.
-	3 = COA
-	3 {
-		10 = TEXT
-		10 {
-			data = TSFE:lang
-			wrap = {path:EXT:pmkshadowbox/res/build/lang/shadowbox-|.js}
-			insertData = 1
-		}
-
-		stdWrap.wrap = <script type="text/javascript" src="|"></script>
-		stdWrap.ifEmpty.dataWrap = {path:EXT:pmkshadowbox/res/build/lang/shadowbox-{$plugin.pmkshadowbox.fallbackLanguage}.js}
-	}
-
 	# Include the main script
 	4 = TEXT
 	4 {
@@ -69,106 +21,131 @@ page.headerData.1230 {
 		stdWrap.dataWrap = {path:EXT:pmkshadowbox/res/build/shadowbox.js}
 	}
 
-	# Include player scripts
+	# Include the skin script
 	5 = TEXT
 	5 {
-		value  = {$plugin.pmkshadowbox.players}
-		split {
-			token = ,
-			cObjNum = 1
-			1 = TEXT
-			1 {
-				current = 1
-				trim = 1
-				wrap2 = <script type="text/javascript" src="|"></script>
-				wrap = {path:EXT:pmkshadowbox/res/build/player/shadowbox-|.js}
-				insertData = 1
-			}
-		}
-	}
-
-	# Include the skin script
-	6 = TEXT
-	6 {
 		wrap = <script type="text/javascript" src="|"></script>
 		stdWrap.dataWrap = {path:{$plugin.pmkshadowbox.skinPath}/skin.js}
 	}
 
 	# Include the skin CSS
-	7 = TEXT
-	7 {
+	6 = TEXT
+	6 {
 		wrap = <link rel="stylesheet" href="|" type="text/css" media="screen" />
 		stdWrap.dataWrap = {path:{$plugin.pmkshadowbox.skinPath}/skin.css}
 	}
 }
 
 # Generate inline initialisation code
-temp.shadowBoxInit = TEXT
+temp.shadowBoxInit = COA
 temp.shadowBoxInit {
 	# check if the setup code should be skipped
 	if.isFalse = {$plugin.pmkshadowbox.skipSetup}
 
 	# image map initialisation
-	value (
+	20 = TEXT
+	20.value (
 				});
 				var shadowBoxElements = document.getElementsByTagName('area');
 				if (shadowBoxElements.length) {
 					Shadowbox.setup(shadowBoxElements, {{$plugin.pmkshadowbox.imageMapOptions}});
 				}
 	)
-
 	# no value if the imagemap setup stuff should be skipped
-	override = });
-	override.if.isTrue = {$plugin.pmkshadowbox.skipImageMapSetup}
+	20.override = });
+	20.override.if.isTrue = {$plugin.pmkshadowbox.skipImageMapSetup}
 
-	# add shadowbox main initialisation
-	wrap (
-			if (0) {} // js minifcation workaround (jsmin)
-			function shadowBoxInit() {
-				Shadowbox.init({
-					|
+	10 = COA
+	10 {
+		# add shadowbox main initialisation
+		wrap (
+				if (0) {} // js minifcation workaround (jsmin)
+					Shadowbox.init({
+						|
+		)
+		# add player config options
+		1 = TEXT
+		1 {
+			value  = {$plugin.pmkshadowbox.players}
+			wrap = players: [|],
+			split {
+				token = ,
+				cObjNum = 1 |*||*| 2
+				1 = TEXT
+				1 {
+					current = 1
+					trim = 1
+					wrap = "|",
+				}
+				2 < .1
+				2.wrap = "|"
 			}
-
-			if (window.addEventListener) { 
-				window.addEventListener('load', shadowBoxInit, false); 
-			} else if (window.attachEvent) { 
-				window.attachEvent('onload', shadowBoxInit); 
+		}
+		# add language option 
+		2 = TEXT
+		2 {
+			data = TSFE:lang
+			override = {$plugin.pmkshadowbox.fallbackLanguage}
+			override.if.isFalse.postUserFunc = tx_pmkshadowbox_cache->fileExists
+			override.if.isFalse.postUserFunc.file.cObject = TEXT
+			override.if.isFalse.postUserFunc.file.cObject {
+				data = TSFE:lang
+				wrap = {path:EXT:pmkshadowbox/res/build/languages/shadowbox-|.js}
+				insertData = 1
 			}
-	)
-
-	stdWrap.dataWrap (
-		animate: {$plugin.pmkshadowbox.animate},
-		animateFade: {$plugin.pmkshadowbox.animateFade},
-		modal: {$plugin.pmkshadowbox.modal},
-		autoplayMovies: {$plugin.pmkshadowbox.autoplayMovies},
-		showMovieControls: {$plugin.pmkshadowbox.showMovieControls},
-		displayNav: {$plugin.pmkshadowbox.displayNav},
-		continuous: {$plugin.pmkshadowbox.continuous},
-		displayCounter: {$plugin.pmkshadowbox.displayCounter},
-		enableKeys: {$plugin.pmkshadowbox.enableKeys},
-		initialWidth: {$plugin.pmkshadowbox.initialWidth},
-		initialHeight: {$plugin.pmkshadowbox.initialHeight},
-		counterLimit: {$plugin.pmkshadowbox.counterLimit},
-		viewportPadding: {$plugin.pmkshadowbox.viewportPadding},
-		resizeDuration: {$plugin.pmkshadowbox.resizeDuration},
-		fadeDuration: {$plugin.pmkshadowbox.fadeDuration},
-		slideshowDelay: {$plugin.pmkshadowbox.slideshowDelay},
-		overlayOpacity: {$plugin.pmkshadowbox.overlayOpacity},
-		animSequence: '{$plugin.pmkshadowbox.animSequence}',
-		counterType: '{$plugin.pmkshadowbox.counterType}',
-		handleOversize: '{$plugin.pmkshadowbox.handleOversize}',
-		handleUnsupported: '{$plugin.pmkshadowbox.handleUnsupported}',
-		handleException: {$plugin.pmkshadowbox.handleException},
-		onOpen: {$plugin.pmkshadowbox.onOpen},
-		onFinish: {$plugin.pmkshadowbox.onFinish},
-		onChange: {$plugin.pmkshadowbox.onChange},
-		onClose: {$plugin.pmkshadowbox.onClose},
-		overlayColor: '{$plugin.pmkshadowbox.overlayColor}',
-		flashBgColor: '{$plugin.pmkshadowbox.flashBgColor}',
-		flvPlayer: '{path:{$plugin.pmkshadowbox.flvPlayer}}',
-		iframeScrolling: '{$plugin.pmkshadowbox.iframeScrolling}'
-	)
+			wrap = language: "|",
+		}
+		3 = TEXT
+		3.dataWrap (
+			animate: {$plugin.pmkshadowbox.animate},
+			animateFade: {$plugin.pmkshadowbox.animateFade},
+			animSequence: '{$plugin.pmkshadowbox.animSequence}',
+			autoplayMovies: {$plugin.pmkshadowbox.autoplayMovies},
+			autoplayMovies: {$plugin.pmkshadowbox.autoDimensions},
+			continuous: {$plugin.pmkshadowbox.continuous},
+			counterLimit: {$plugin.pmkshadowbox.counterLimit},
+			counterType: '{$plugin.pmkshadowbox.counterType}',
+			displayCounter: {$plugin.pmkshadowbox.displayCounter},
+			displayNav: {$plugin.pmkshadowbox.displayNav},
+			enableKeys: {$plugin.pmkshadowbox.enableKeys},
+			fadeDuration: {$plugin.pmkshadowbox.fadeDuration},
+			handleOversize: '{$plugin.pmkshadowbox.handleOversize}',
+			handleUnsupported: '{$plugin.pmkshadowbox.handleUnsupported}',
+			initialHeight: {$plugin.pmkshadowbox.initialHeight},
+			initialWidth: {$plugin.pmkshadowbox.initialWidth},
+			modal: {$plugin.pmkshadowbox.modal},
+			onChange: {$plugin.pmkshadowbox.onChange},
+			onClose: {$plugin.pmkshadowbox.onClose},
+			onFinish: {$plugin.pmkshadowbox.onFinish},
+			onOpen: {$plugin.pmkshadowbox.onOpen},
+			overlayColor: '{$plugin.pmkshadowbox.overlayColor}',
+			overlayOpacity: {$plugin.pmkshadowbox.overlayOpacity},
+			resizeDuration: {$plugin.pmkshadowbox.resizeDuration},
+			resizeDuration: {$plugin.pmkshadowbox.showOverlay},
+			showMovieControls: {$plugin.pmkshadowbox.showMovieControls},
+			slideshowDelay: {$plugin.pmkshadowbox.slideshowDelay},
+			useSizzle: {$plugin.pmkshadowbox.useSizzle},
+			viewportPadding: {$plugin.pmkshadowbox.viewportPadding}
+		)
+	}
 }
+
+# Additional 3.0b options not added yet
+/*
+ease
+errors
+ext
+flashParams
+flashVars
+		flashVersion: '{$plugin.pmkshadowbox.flashVersion}',
+*/
+
+# Options not used in 3.0b
+#		handleException: {$plugin.pmkshadowbox.handleException},
+#		flashBgColor: '{$plugin.pmkshadowbox.flashBgColor}',
+#		flvPlayer: '{path:{$plugin.pmkshadowbox.flvPlayer}}',
+#		iframeScrolling: '{$plugin.pmkshadowbox.iframeScrolling}'
+
 
 # adding the initialisation code as inlineJS
 # the option was introduced in 4.2.0
