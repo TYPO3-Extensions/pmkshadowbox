@@ -137,6 +137,7 @@ errors
 ext
 flashParams
 flashVars
+		iframeScrolling: '{$plugin.pmkshadowbox.iframeScrolling}'
 		flashVersion: '{$plugin.pmkshadowbox.flashVersion}',
 */
 
@@ -144,7 +145,6 @@ flashVars
 #		handleException: {$plugin.pmkshadowbox.handleException},
 #		flashBgColor: '{$plugin.pmkshadowbox.flashBgColor}',
 #		flvPlayer: '{path:{$plugin.pmkshadowbox.flvPlayer}}',
-#		iframeScrolling: '{$plugin.pmkshadowbox.iframeScrolling}'
 
 
 # adding the initialisation code as inlineJS
