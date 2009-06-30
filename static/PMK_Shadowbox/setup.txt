@@ -59,7 +59,7 @@ temp.shadowBoxInit {
 	10 {
 		# add shadowbox main initialisation
 		wrap (
-				if (0) {} // js minifcation workaround (jsmin)
+				if(0) {a=1;} // js minifcation workaround (jsmin)
 					Shadowbox.init({
 						|
 		)
