@@ -131,7 +131,7 @@ class tx_pmkshadowbox_cache {
 
 		// parse script tags
 		$scriptTags = $this->parseContent($content);
-
+	
 		// built script files array
 		$files = array();
 		foreach ($scriptTags[1] as $script) {
@@ -142,11 +142,11 @@ class tx_pmkshadowbox_cache {
 			$files[$filename] = PATH_site . $script;
 
 			// parse type for the main file name
-			if ($type == 'adapter') {
+			if ($type == 'adapters') {
 				$adapter = substr($filename, 10, strrpos($filename, '.') - 10);
-			} elseif ($type == 'lang') {
+			} elseif ($type == 'languages') {
 				$language = substr($filename, 10, strrpos($filename, '.') - 10);
-			} elseif ($type !== 'player' && $type !== 'build') {
+			} elseif ($type !== 'players' && $type !== 'build') {
 				$skin = $type;
 			}
 		}
@@ -154,7 +154,7 @@ class tx_pmkshadowbox_cache {
 		// merge player scripts
 		foreach ($this->players as $playerScript) {
 			$files[$playerScript] = t3lib_extMgm::extPath('pmkshadowbox') .
-				'res/build/player/' . $playerScript;
+				'res/build/players/' . $playerScript;
 		}
 
 		// built final cache filename
@@ -236,6 +236,10 @@ class tx_pmkshadowbox_cache {
 	 */
 	public function fileExists($content,$conf) {
 		return @file_exists($this->cObj->stdWrap($conf['file'],$conf['file.']));
+	}
+
+	public function getPathToShadowboxRoot() {
+		return t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST') . '/' . str_replace(PATH_site, '', t3lib_extMgm::extPath('pmkshadowbox') . 'res/build/');
 	}
 }
 

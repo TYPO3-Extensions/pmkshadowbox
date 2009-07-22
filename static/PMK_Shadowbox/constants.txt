@@ -58,8 +58,8 @@ plugin.pmkshadowbox {
 	# cat=pmkshadowbox//o0; type=string; label= Initial Options for ImageMap Links: The shadowbox must be enabled in a different way for image maps, because the rel attribute is forbidden for area tags. We handle that by adding an initial shadowbox setup call for image maps. If you don't add some options here, then the defaults are used. You can change the options for each area tag by applying the shadowbox function call (Shadowbox.setup(document.getElementsByTagName('area'), {})) with your new options inside the curly braces before each area tag. Example: "player:'iframe',width:805,height:500"
 	imageMapOptions = 
 
-	# cat=pmkshadowbox//o1; type=options[None=0, Dojo Toolkit=1, Ext=2, MooTools=3, Prototype=4, YUI=5, jQuery=6]; label= JS Adapter: Although Shadowbox can be used in standalone mode, it's just as easy to use Shadowbox with your JavaScript library of choice for a given project. This is accomplished using adapters. An adapter is a small file that tells Shadowbox which methods to call on the underlying framework to achieve some common purpose such as querying the DOM or handling events.
-	adapter = 0
+	# cat=pmkshadowbox//o1; type=options[Base=base, Dojo Toolkit=dojo, Ext=ext, MooTools=mootools, Prototype=prototype, YUI=yui, jQuery=jquery]; label= JS Adapter: Although Shadowbox can be used in standalone mode, it's just as easy to use Shadowbox with your JavaScript library of choice for a given project. This is accomplished using adapters. An adapter is a small file that tells Shadowbox which methods to call on the underlying framework to achieve some common purpose such as querying the DOM or handling events.
+	adapter = base
 
 	# cat=pmkshadowbox//o2; type=short; label= Resizing Duration: The duration (in seconds) of the resizing animations. Defaults to 0.55.
 	resizeDuration = 0.55
@@ -104,7 +104,7 @@ plugin.pmkshadowbox {
 	imgtext.captionField = titleText
 
 	# cat=pmkshadowbox//oj; type=string; label= Players: Shadowbox supports a wide range of media formats. However, you may not need to display all of the supported formats on your page. For this purpose, several media "player" classes have been created that are able to display different types of content. Available "players" (See manual for more info.) : flv, html, iframe, img, qt, swf, wmp.
-	players = flv, html, iframe, img, qt, swf, wmp
+	players = img, swf, flv, qt, wmp, iframe, html
 
 	# cat=pmkshadowbox//ok; type=string; label= Fallback Language: You can define the fallback language of the shadowbox script. The fallback is used if the variable config.language or a language file doesn't exists. Defaults to "en".
 	fallbackLanguage = en

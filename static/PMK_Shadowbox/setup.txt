@@ -15,10 +15,58 @@ page.headerData.1230 {
 	}
 
 	# Include the main script
-	4 = TEXT
-	4 {
+	2 = TEXT
+	2 {
 		wrap = <script type="text/javascript" src="|"></script>
 		stdWrap.dataWrap = {path:EXT:pmkshadowbox/res/build/shadowbox.js}
+	}
+
+	# Include the Base adapter script
+	# Note: This part might be different/changed if a special adapter is chosen.
+	# (See conditions later in this TS setup.)
+	3 = COA
+	3 {
+		wrap = <script type="text/javascript" src="|"></script>
+
+		10 = CASE
+		10 {
+			key = {$plugin.pmkshadowbox.adapter}
+			default = TEXT
+			default.dataWrap = {path:EXT:pmkshadowbox/res/build/adapters/shadowbox-base.js}
+
+			dojo = TEXT
+			dojo.dataWrap = {path:EXT:pmkshadowbox/res/build/adapters/shadowbox-dojo.js}
+
+			ext = TEXT
+			ext.dataWrap = {path:EXT:pmkshadowbox/res/build/adapters/shadowbox-ext.js}
+
+			mootools = TEXT
+			mootools.dataWrap = {path:EXT:pmkshadowbox/res/build/adapters/shadowbox-mootools.js}
+
+			prototype = TEXT
+			prototype.dataWrap = {path:EXT:pmkshadowbox/res/build/adapters/shadowbox-prototype.js}
+
+			yui = TEXT
+			yui.dataWrap = {path:EXT:pmkshadowbox/res/build/adapters/shadowbox-yui.js}
+
+			jquery = TEXT
+			jquery.dataWrap = {path:EXT:pmkshadowbox/res/build/adapters/shadowbox-jquery.js}
+		}
+	}
+
+	# Include javascript language file, based on selected FE language.
+	# If language file doesn't exists, fallback language is used.
+	4 = COA
+	4 {
+		10 = TEXT
+		10 {
+			data = TSFE:lang
+			wrap = {path:EXT:pmkshadowbox/res/build/languages/shadowbox-|.js}
+			insertData = 1
+		}
+
+		stdWrap.wrap = <script type="text/javascript" src="|"></script>
+		stdWrap.ifEmpty.dataWrap = {path:EXT:pmkshadowbox/res/build/languages/shadowbox-{$plugin.pmkshadowbox.fallbackLanguage}.js}
 	}
 
 	# Include the skin script
@@ -31,7 +79,7 @@ page.headerData.1230 {
 	# Include the skin CSS
 	6 = TEXT
 	6 {
-		wrap = <link rel="stylesheet" href="|" type="text/css" media="screen" />
+		wrap = <link rel="stylesheet" href="|" type="text/css" />
 		stdWrap.dataWrap = {path:{$plugin.pmkshadowbox.skinPath}/skin.css}
 	}
 }
@@ -46,23 +94,39 @@ temp.shadowBoxInit {
 	20 = TEXT
 	20.value (
 				});
-				var shadowBoxElements = document.getElementsByTagName('area');
-				if (shadowBoxElements.length) {
-					Shadowbox.setup(shadowBoxElements, {{$plugin.pmkshadowbox.imageMapOptions}});
+				function shadowBoxSetup() {
+					var shadowBoxElements = document.getElementsByTagName('area');
+					if (shadowBoxElements.length) {
+						Shadowbox.setup(shadowBoxElements, {{$plugin.pmkshadowbox.imageMapOptions}});
+					}
 				}
+				if (window.addEventListener) {
+                	window.addEventListener('load', shadowBoxSetup, false);
+            	} else if (window.attachEvent) {
+            	    window.attachEvent('onload', shadowBoxSetup);
+            	}
 	)
 	# no value if the imagemap setup stuff should be skipped
 	20.override = });
 	20.override.if.isTrue = {$plugin.pmkshadowbox.skipImageMapSetup}
 
+	9 = TEXT
+	9 {
+		preUserFunc = tx_pmkshadowbox_cache->getPathToShadowboxRoot
+		wrap (
+				if(0) {a=1;} // js minifcation workaround (jsmin)
+				Shadowbox.path = '|';
+		)
+	}
+
 	10 = COA
 	10 {
 		# add shadowbox main initialisation
 		wrap (
-				if(0) {a=1;} // js minifcation workaround (jsmin)
 					Shadowbox.init({
 						|
 		)
+
 		# add player config options
 		1 = TEXT
 		1 {
@@ -81,6 +145,7 @@ temp.shadowBoxInit {
 				2.wrap = "|"
 			}
 		}
+
 		# add language option 
 		2 = TEXT
 		2 {
@@ -95,8 +160,10 @@ temp.shadowBoxInit {
 			}
 			wrap = language: "|",
 		}
+
 		3 = TEXT
 		3.dataWrap (
+			adapter: '{$plugin.pmkshadowbox.adapter}',
 			animate: {$plugin.pmkshadowbox.animate},
 			animateFade: {$plugin.pmkshadowbox.animateFade},
 			animSequence: '{$plugin.pmkshadowbox.animSequence}',
@@ -137,15 +204,7 @@ errors
 ext
 flashParams
 flashVars
-		iframeScrolling: '{$plugin.pmkshadowbox.iframeScrolling}'
-		flashVersion: '{$plugin.pmkshadowbox.flashVersion}',
 */
-
-# Options not used in 3.0b
-#		handleException: {$plugin.pmkshadowbox.handleException},
-#		flashBgColor: '{$plugin.pmkshadowbox.flashBgColor}',
-#		flvPlayer: '{path:{$plugin.pmkshadowbox.flvPlayer}}',
-
 
 # adding the initialisation code as inlineJS
 # the option was introduced in 4.2.0

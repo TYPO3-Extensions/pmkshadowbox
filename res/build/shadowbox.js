@@ -165,6 +165,7 @@ var Shadowbox = function(){
                                         // each item in gallery
             displayCounter: true,       // display the gallery counter
             displayNav: true,           // show the navigation controls
+			iframeScrolling: 'auto',	// iframe scrolling (auto, no, yes)
 
             /**
              * Easing function used for animations. Based on a cubic polynomial.
@@ -573,6 +574,10 @@ var Shadowbox = function(){
         getCurrent: function(){
             return S.current > -1 ? S.gallery[S.current] : null;
         },
+
+		getIframeScrollingOption: function(){
+			return S.options.iframeScrolling;
+		},
 
         /**
          * Determines if there is a next piece to display in the current
