@@ -188,7 +188,7 @@ temp.shadowBoxInit {
 			overlayColor: '{$plugin.pmkshadowbox.overlayColor}',
 			overlayOpacity: {$plugin.pmkshadowbox.overlayOpacity},
 			resizeDuration: {$plugin.pmkshadowbox.resizeDuration},
-			resizeDuration: {$plugin.pmkshadowbox.showOverlay},
+			showOverlay: {$plugin.pmkshadowbox.showOverlay},
 			showMovieControls: {$plugin.pmkshadowbox.showMovieControls},
 			slideshowDelay: {$plugin.pmkshadowbox.slideshowDelay},
 			useSizzle: {$plugin.pmkshadowbox.useSizzle},
