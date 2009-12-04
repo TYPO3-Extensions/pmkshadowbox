@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 1999-2009 Peter Klein (peter@umloud.dk)
+*  (c) 1999-2009 Peter Klein (pmk@io.dk)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
  * Sets the register var "IMAGE_NUM_CURRENT" to the
  * the current image number, similar to tt_content.
  *
- * @author	Peter Klein <peter@umloud.dk>
+ * @author	Peter Klein <pmk@io.dk>
  */
 
 /**

@@ -223,6 +223,14 @@ page.headerData.1230.10.wrap2 (
 )
 [end]
 
+# adding the initialisation code using jsInline
+# the inlineJS option was renamed to jsInline in 4.3.0
+[compatVersion = 4.3.0]
+page.inlineJS.1230 >
+page.jsInline.1230 < temp.shadowBoxInit
+[end]
+
+
 # Modify the standard TYPO3 "Click Enlarge" option, so that lightbox effect is used.
 tt_content.image.20.1 {
 	titleText.field = {$plugin.pmkshadowbox.imgtext.captionField}
