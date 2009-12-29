@@ -223,11 +223,15 @@ page.headerData.1230.10.wrap2 (
 )
 [end]
 
-# adding the initialisation code using jsInline
+# adding the initialisation code using jsInline/jsFooterInline
 # the inlineJS option was renamed to jsInline in 4.3.0
+# Due to the stupid way TYPO3 4.3 adds the javascripts,
+# there's no way to control in which order the scripts are placed.
+# So in order for Shadowbox to work on 4.3 it must use "jsFooterInline"
+# and place the init script at the bottom of the page.
 [compatVersion = 4.3.0]
+page.jsFooterInline.1230 < temp.shadowBoxInit
 page.inlineJS.1230 >
-page.jsInline.1230 < temp.shadowBoxInit
 [end]
 
 
