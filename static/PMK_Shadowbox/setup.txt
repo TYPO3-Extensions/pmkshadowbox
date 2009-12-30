@@ -168,7 +168,7 @@ temp.shadowBoxInit {
 			animateFade: {$plugin.pmkshadowbox.animateFade},
 			animSequence: '{$plugin.pmkshadowbox.animSequence}',
 			autoplayMovies: {$plugin.pmkshadowbox.autoplayMovies},
-			autoplayMovies: {$plugin.pmkshadowbox.autoDimensions},
+			autoDimensions: {$plugin.pmkshadowbox.autoDimensions},
 			continuous: {$plugin.pmkshadowbox.continuous},
 			counterLimit: {$plugin.pmkshadowbox.counterLimit},
 			counterType: '{$plugin.pmkshadowbox.counterType}',
