@@ -1,3 +1,5 @@
+Shadowbox.js Readme
+
 Shadowbox is an online media viewing application that supports all of the web's
 most popular media publishing formats. Shadowbox is written entirely in
 JavaScript and CSS and is highly customizable. Using Shadowbox, website authors
@@ -9,6 +11,6 @@ under which Shadowbox may be used. If you did not, you may obtain a copy of the
 license at http://shadowbox-js.com/LICENSE
 
 Author:      Michael J. I. Jackson <michael@mjijackson.com>
-Copyright:   2007-2009 Michael J. I. Jackson, all rights reserved.
+Copyright:   2007-2009 Michael J. I. Jackson
 
-You can view a demonstration of Shadowbox at http://shadowbox-js.com/
+For more information, please see the Shadowbox website at http://shadowbox-js.com/.

@@ -23,7 +23,6 @@ Shadowbox.skin = function(){
      * @private
      */
     png = [
-        'sb-nav-save',
         'sb-nav-close',
         'sb-nav-next',
         'sb-nav-play',
@@ -423,8 +422,8 @@ Shadowbox.skin = function(){
                                     '<a id="sb-nav-play" title="{play}" onclick="Shadowbox.play()"></a>' +
                                     '<a id="sb-nav-pause" title="{pause}" onclick="Shadowbox.pause()"></a>' +
                                     '<a id="sb-nav-previous" title="{previous}" onclick="Shadowbox.previous()"></a>' +
-									'<a id="sb-nav-print" title="Print" onclick="Shadowbox.skin.print()"></a>' + 
-									'<a id="sb-nav-save" title="Save"></a>' + 
+									'<a id="sb-nav-print" title="Print" onclick="Shadowbox.skin.print()"></a>' +
+									'<a id="sb-nav-save" title="Save"></a>' +
                                 '</div>' +
                                 '<div style="clear:both"></div>' +
                             '</div>' +
@@ -555,20 +554,8 @@ Shadowbox.skin = function(){
          * @public
          */
         onFinish: function(cb){
-			this.setSave();
             toggleLoading(false, cb);
         },
-
-		print: function(){
-			var url = 'typo3conf/ext/pmkshadowbox/savefile.php?mode=print&image='+Shadowbox.getCurrent()['content'];
-			window.open(url);
-			return false;
-		},
-		
-		setSave: function(){
-			var sv = document.getElementById('sb-nav-save');
-			if (sv) sv.href = 'typo3conf/ext/pmkshadowbox/savefile.php?mode=save&image='+Shadowbox.getCurrent()['content'];
-		},
 
         /**
          * Called when Shadowbox is closed.
@@ -626,7 +613,18 @@ Shadowbox.skin = function(){
                     el.width = d.resize_w;
                 }
             }
-        }
+        },
+
+		print: function(){
+			var url = 'typo3conf/ext/pmkshadowbox/savefile.php?mode=print&image='+Shadowbox.getCurrent()['content'];
+			window.open(url);
+			return false;
+		},
+
+		setSave: function(){
+			var sv = document.getElementById('sb-nav-save');
+			if (sv) sv.href = 'typo3conf/ext/pmkshadowbox/savefile.php?mode=save&image='+Shadowbox.getCurrent()['content'];
+		}
 
     };
 
