@@ -479,6 +479,10 @@
             return S.current > -1 ? S.gallery[S.current] : null;
         },
 
+		getIframeScrollingOption: function(){
+			return S.options.iframeScrolling;
+		},
+
         /**
          * Determines if there is a next piece to display in the current
          * gallery.
@@ -1739,6 +1743,7 @@
                                     // each item in gallery
             displayCounter: true,   // display the gallery counter
             displayNav: true,       // show the navigation controls
+			iframeScrolling: 'auto',// iframe scrolling (auto, no, yes
             fadeDuration: 0.35,     // duration of the fade animations (in seconds)
             initialHeight: 160,     // initial height (pixels)
             initialWidth: 320,      // initial width (pixels)

@@ -50,7 +50,7 @@
 
             var html = '<iframe id="' + id + '" name="' + id + '" height="100%" ' +
                 'width="100%" frameborder="0" marginwidth="0" marginheight="0" ' +
-                'scrolling="auto"';
+                'scrolling="' + S.getIframeScrollingOption() + '"';
 
             if(S.client.isIE){
                 // prevent brief whiteout while loading iframe source
