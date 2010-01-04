@@ -32,9 +32,9 @@
  * @author Stefan Galinski <stefan.galinski@gmail.com>
  */
 
-if (!class_exists(JSMinPlus)) {
-	/** Minify: JSMin+ */
-	require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'res/jsminplus.php');
+if (!class_exists(JSMin)) {
+	/** Minify: JSMin */
+	require_once(PATH_typo3 . 'contrib/jsmin/jsmin.php');
 }
 
 /**
@@ -217,7 +217,7 @@ class tx_pmkshadowbox_cache {
 
 	/**
 	 * Returns the contents of an array of given javascript files as a string. All files that
-	 * has more than 20 lines are minified with JSMin+.
+	 * has more than 20 lines are minified with JSMin.
 	 *
 	 * @param array $files files with absolute paths
 	 * @return string merged file contents
@@ -231,7 +231,7 @@ class tx_pmkshadowbox_cache {
 
 			// we assume that files with less than 20 lines are not minified
 			if ($lines > 20) {
-				$content = JSMinPlus::minify($content);
+				$content = JSMin::minify($content);
 			}
 
 			$mergedContent .= $content . "\n";
