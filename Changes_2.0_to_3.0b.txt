@@ -3,27 +3,27 @@ PMK Shadowbox changes from updating Shadowbox from v2.0 to Shadowbox v3.0b.
 
 Typoscript changes:
 
-As of Shadowbox v3.0b, the adapter, language and plugin scripts are now loaded 
+As of Shadowbox v3.0b, the adapter, language and plugin scripts are now loaded
 from the main Shadowbox itself.
 
-- Adapters are autodetected, so no loading/config options is needed for this 
+- Adapters are autodetected, so no loading/config options is needed for this
   anymore.
 
-- Language and plugins are now defined by config options. This required a little 
-  rewrite in the TS setup, in order to wrap those settings correctly. 
-  (NOTE: The language part, might benefit from a simple userfunc, to check if the 
+- Language and plugins are now defined by config options. This required a little
+  rewrite in the TS setup, in order to wrap those settings correctly.
+  (NOTE: The language part, might benefit from a simple userfunc, to check if the
   lang file is present. - Added 1/6-09 Code is located at the bottom of the cache class.)
 
-CHECK: Does the imagemap/area setup still work, or have I messed it up?
-CHECK: Does the caching still work? (Now that he adapters, language and plugins 
-       are autoloaded?)  
+CHECK [WORKS]: Does the imagemap/area setup still work, or have I messed it up?
+CHECK [WORKS]: Does the caching still work? (Now that he adapters, language and plugins
+       are autoloaded?)
 
 ---------------------------------------------------------------------------
 
 Skins:
 
-In order to have skin support, similar to that of Shadowbox v2.0, I moved the 
-skin class of the main Shadowbox script, into a seperate file (placed in the 
+In order to have skin support, similar to that of Shadowbox v2.0, I moved the
+skin class of the main Shadowbox script, into a seperate file (placed in the
 skins folder as in v2.0)
 
 TODO: Convert the old v2.0 skins into v3.0 format. (Or make some more interesting ones)
@@ -42,10 +42,10 @@ TODO: Add support for "Shadowbox Mods - Thumbnails in overlay" by Peter Mitchell
       Add the Flash and other new options to constants and setup. (See setup for list)
 	  (NOTE: Im not quite sure what format they should be added in, as most of
 	  them is not simple strings or booleans)
-	  
+
       Remove the unused options from constants. (See setup for list)
-	  
-      Scripts and Stylesheets should be compressed in final version.
+
+DONE: Scripts and Stylesheets should be compressed in final version.
 	  Or maybe the caching script could compress scripts before caching?
 	  (PHP version of Packer and JSMin can be found in the t3mootols ext.)
 

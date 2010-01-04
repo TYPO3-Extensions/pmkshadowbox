@@ -32,6 +32,11 @@
  * @author Stefan Galinski <stefan.galinski@gmail.com>
  */
 
+if (!class_exists(JSMinPlus)) {
+	/** Minify: JSMin+ */
+	require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'res/jsminplus.php');
+}
+
 /**
  * This class contains several methods which are used for the merging process.
  *
@@ -49,9 +54,9 @@ class tx_pmkshadowbox_cache {
 
 	/**
 	 * CONSTRUCTOR
-	 * 
+	 *
 	 * Initialites some class variables...
-	 * 
+	 *
 	 * @return void
 	 */
 	public function __construct() {
@@ -88,7 +93,7 @@ class tx_pmkshadowbox_cache {
 		if (!is_dir(PATH_site . $this->tempDirectory)) {
 			return;
 		}
-		
+
 		// remove any files in the directory
 		$handle = opendir(PATH_site . $this->tempDirectory);
 		while (false !== ($file = readdir($handle))) {
@@ -131,7 +136,7 @@ class tx_pmkshadowbox_cache {
 
 		// parse script tags
 		$scriptTags = $this->parseContent($content);
-	
+
 		// built script files array
 		$files = array();
 		foreach ($scriptTags[1] as $script) {
@@ -183,9 +188,7 @@ class tx_pmkshadowbox_cache {
 	protected function parseContent($content) {
 		$matches = array();
 		$prefix = preg_quote($this->extConfig['prefix'], '/');
-		$pattern =
-			'/<script.*?src="(.+?)".*?>.*?<\/script>' . // any script tags
-			'/is'; // case insenstitive and parse it like a single line
+		$pattern = '/<script.*?src="(.+?)".*?>.*?<\/script>/is';
 		preg_match_all($pattern, $content, $matches);
 
 		return $matches;
@@ -213,7 +216,8 @@ class tx_pmkshadowbox_cache {
 	}
 
 	/**
-	 * Returns the contents of an array of given files.
+	 * Returns the contents of an array of given javascript files as a string. All files that
+	 * has more than 20 lines are minified with JSMin+.
 	 *
 	 * @param array $files files with absolute paths
 	 * @return string merged file contents
@@ -221,25 +225,36 @@ class tx_pmkshadowbox_cache {
 	protected function getMergedFileContents(array $files) {
 		$mergedContent = '';
 		foreach ($files as $file) {
-			$mergedContent .= file_get_contents($file);
+			$content = file($file);
+			$lines = count($content);
+			$content = implode("\n", $content);
+
+			// we assume that files with less than 20 lines are not minified
+			if ($lines > 20) {
+				$content = JSMinPlus::minify($content);
+			}
+
+			$mergedContent .= $content . "\n";
 		}
 
 		return $mergedContent;
 	}
-	
+
 	/**
 	 * Tests if a given file exists or not.
 	 *
 	 * @param string $content content
-	 * @param array $conf config 
+	 * @param array $conf config
 	 * @return boolean true if file exists
 	 */
 	public function fileExists($content,$conf) {
 		return @file_exists($this->cObj->stdWrap($conf['file'],$conf['file.']));
 	}
 
+	// @todo to be documented
 	public function getPathToShadowboxRoot() {
-		return t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST') . '/' . str_replace(PATH_site, '', t3lib_extMgm::extPath('pmkshadowbox') . 'res/build/');
+		return t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST') . '/' .
+			str_replace(PATH_site, '', t3lib_extMgm::extPath('pmkshadowbox') . 'res/build/');
 	}
 }
 
