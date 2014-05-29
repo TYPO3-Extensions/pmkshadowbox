@@ -136,7 +136,6 @@ class tx_pmkshadowbox_build {
 
 			$labelWithoutDot = rtrim($label, '.');
 			$newConfiguration[$labelWithoutDot] = $this->cObj->stdWrap('', $value);
-			print_r($newConfiguration[$labelWithoutDot]);
 		}
 
 		return $newConfiguration;
