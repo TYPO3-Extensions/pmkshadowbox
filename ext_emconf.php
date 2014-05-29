@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Shadowbox is an online media viewer application (Lightbox) that supports all of the web\'s most popular media publishing formats. Shadowbox is written entirely in JavaScript and CSS and is highly customizable. Compatible with ALL JS Frameworks.',
 	'category' => 'fe',
 	'shy' => 0,
-	'version' => '3.2.1',
+	'version' => '3.3.0',
 	'dependencies' => '',
 	'conflicts' => 'kj_imagelightbox2,perfectlightbox,wsclicklightbox,ju_multibox,pmkslimbox,dam_ttnews',
 	'priority' => '',
@@ -28,16 +28,16 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearcacheonload' => 0,
 	'lockType' => '',
 	'author' => 'Peter Klein, Stefan Galinski',
-	'author_email' => 'pmk@io.dk',
-	'author_company' => 'telenor, domainFACTORY GmbH',
+	'author_email' => 'stefan@sgalinski.de',
+	'author_company' => '',
 	'CGLcompliance' => NULL,
 	'CGLcompliance_note' => NULL,
 	'constraints' => 
 	array (
 		'depends' => 
 		array (
-			'typo3' => '4.5.0-6.1.99',
-			'php' => '5.3.0-5.4.99',
+			'typo3' => '4.5.0-6.2.99',
+			'php' => '5.3.0-5.5.99',
 		),
 		'conflicts' => 
 		array (
