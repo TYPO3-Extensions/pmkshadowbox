@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +26,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(PATH_typo3 . 'interfaces/interface.backend_cacheActionsHook.php');
+if (!t3lib_div::compat_version('6.2.0')) {
+	require_once(PATH_typo3 . 'interfaces/interface.backend_cacheActionsHook.php');
+}
 
 /**
  * Extending class to render the menu for the cache clearing actions,
@@ -69,4 +72,5 @@ if (defined(
 ) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_pmkshadowbox_clearcachemenu.php']);
 }
+
 ?>
