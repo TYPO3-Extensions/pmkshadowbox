@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
 * Copyright notice
 *
@@ -32,7 +33,7 @@
  */
 class tx_pmkshadowbox_cacheTest extends tx_phpunit_testcase {
 	/**
-	 * @var tx_pmkshadowbox_build
+	 * @var tx_pmkshadowbox_cache
 	 */
 	protected $fixture = null;
 
@@ -119,4 +120,5 @@ class tx_pmkshadowbox_cacheTest extends tx_phpunit_testcase {
 		$this->assertTrue(file_exists(PATH_site . $expectedPathName));
 	}
 }
+
 ?>

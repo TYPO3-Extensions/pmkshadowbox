@@ -40,15 +40,13 @@ class tx_pmkshadowbox_build {
 	/**
 	 * Content Object for Typoscript Operations
 	 *
-	 * @param tslib_cObj
-	 * @var tslib_cObj
+	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
 	 */
 	public $cObj = NULL;
 
 	/**
 	 * Cache Handler
 	 *
-	 * @property tx_pmkshadowbox_cache
 	 * @var tx_pmkshadowbox_cache
 	 */
 	protected $cacheHandler = NULL;
@@ -77,11 +75,8 @@ class tx_pmkshadowbox_build {
 	 */
 	public function __construct($cacheHandler = NULL) {
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
-		$this->sourceDirectory = t3lib_extMgm::siteRelPath('pmkshadowbox') .
-			'resources/shadowbox/source/';
-		$this->extensionConfiguration = unserialize(
-			$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['pmkshadowbox']
-		);
+		$this->sourceDirectory = t3lib_extMgm::siteRelPath('pmkshadowbox') . 'resources/shadowbox/source/';
+		$this->extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['pmkshadowbox']);
 
 		if ($cacheHandler === NULL) {
 			try {
@@ -122,12 +117,16 @@ class tx_pmkshadowbox_build {
 
 	/**
 	 * Applies the stdWrap typoscript property on all entries of the given array that
-	 * are suffixed with a dot. The primitive value without a dot is overriden in this case.
+	 * are suffixed with a dot. The primitive value without a dot is overridden in this case.
 	 *
 	 * @param array $configuration typoscript configuration
 	 * @return array normalized typoscript configuration
 	 */
 	protected function applyStdWrapOn(array $configuration) {
+		if (!is_object($GLOBALS['TSFE'])) {
+			$GLOBALS['TSFE'] = t3lib_div::makeInstance('tslib_fe', array(), 0, 0);
+		}
+
 		$newConfiguration = array();
 		foreach ($configuration as $label => $value) {
 			if (!is_array($value)) {
@@ -137,6 +136,7 @@ class tx_pmkshadowbox_build {
 
 			$labelWithoutDot = rtrim($label, '.');
 			$newConfiguration[$labelWithoutDot] = $this->cObj->stdWrap('', $value);
+			print_r($newConfiguration[$labelWithoutDot]);
 		}
 
 		return $newConfiguration;
@@ -144,7 +144,7 @@ class tx_pmkshadowbox_build {
 
 	/**
 	 * Checks the availability of the adapter and returns the given value or 'base' as an
-	 * harcoded fallback value. It's returned as a relative path to the adapter based upon
+	 * hardcoded fallback value. It's returned as a relative path to the adapter based upon
 	 * the TYPO3 root.
 	 *
 	 * @param string $adapter
@@ -176,8 +176,7 @@ class tx_pmkshadowbox_build {
 		$language = $this->sourceDirectory . 'languages/' . $language . '.js';
 		if (!file_exists(PATH_site . $language)) {
 			$languageFallback = ($languageFallback === 'de' ? 'de-DE' : $languageFallback);
-			$language = $this->sourceDirectory . 'languages/' .
-				$languageFallback . '.js';
+			$language = $this->sourceDirectory . 'languages/' . $languageFallback . '.js';
 			if (!file_exists(PATH_site . $language)) {
 				$language = $this->sourceDirectory . 'languages/en.js';
 			}

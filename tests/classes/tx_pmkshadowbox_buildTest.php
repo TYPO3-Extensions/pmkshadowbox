@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
 * Copyright notice
 *
@@ -71,12 +72,11 @@ class tx_pmkshadowbox_buildTest extends tx_phpunit_testcase {
 	public function testBuildInstanceWithoutCacheHandlerAsParameter() {
 		try {
 			$buildInstance = new tx_pmkshadowbox_build();
+			$cacheHandler = $buildInstance->getCacheHandler();
+			$this->assertTrue(is_dir(PATH_site . $cacheHandler->getCacheDirectory()));
 		} catch(Exception $exception) {
 			$this->fail('Failed with message: ' . $exception->getMessage());
 		}
-		$cacheHandler = $buildInstance->getCacheHandler();
-
-		$this->assertTrue(is_dir(PATH_site . $cacheHandler->getCacheDirectory()));
 	}
 	
 	/**
@@ -244,11 +244,12 @@ class tx_pmkshadowbox_buildTest extends tx_phpunit_testcase {
 		$this->assertTrue(file_exists(PATH_site . $relativeBuildDirectoryPath . 'shadowbox.js'));
 
 		$expectedResources = array('shadowbox.js', 'expressInstall.swf', 'play.png', 'next.png',
-			'close.png', 'pause.png', 'shadowbox.css', 'previous.png', 'player.swf', 'loading.gif');
+			'close.png', 'pause.png', 'shadowbox.css', 'previous.png', 'player.swf', 'loading.gif', 'yt.swf');
 		$actualResources = array();
 
 		$directoryHandler = new DirectoryIterator(PATH_site . $relativeBuildDirectoryPath);
 		foreach ($directoryHandler as $fileInfo) {
+			/** @var $fileInfo DirectoryIterator */
 			if ($fileInfo->isDot()) {
 				continue;
 			}
@@ -286,6 +287,7 @@ class tx_pmkshadowbox_buildTest extends tx_phpunit_testcase {
 
 		$directoryHandler = new DirectoryIterator(PATH_site . $relativeBuildDirectoryPath);
 		foreach ($directoryHandler as $fileInfo) {
+			/** @var $fileInfo DirectoryIterator */
 			if ($fileInfo->isDot()) {
 				continue;
 			}
@@ -323,6 +325,7 @@ class tx_pmkshadowbox_buildTest extends tx_phpunit_testcase {
 
 		$directoryHandler = new DirectoryIterator(PATH_site . $relativeBuildDirectoryPath);
 		foreach ($directoryHandler as $fileInfo) {
+			/** @var $fileInfo DirectoryIterator */
 			if ($fileInfo->isDot()) {
 				continue;
 			}
@@ -361,11 +364,12 @@ class tx_pmkshadowbox_buildTest extends tx_phpunit_testcase {
 		$this->assertTrue(file_exists(PATH_site . $relativeBuildDirectoryPath . 'shadowbox.js'));
 
 		$expectedResources = array('shadowbox.js', 'expressInstall.swf', 'play.png', 'next.png',
-			'close.png', 'pause.png', 'shadowbox.css', 'previous.png', 'player.swf', 'loading.gif');
+			'close.png', 'pause.png', 'shadowbox.css', 'previous.png', 'player.swf', 'loading.gif', 'yt.swf');
 		$actualResources = array();
 
 		$directoryHandler = new DirectoryIterator(PATH_site . $relativeBuildDirectoryPath);
 		foreach ($directoryHandler as $fileInfo) {
+			/** @var $fileInfo DirectoryIterator */
 			if ($fileInfo->isDot()) {
 				continue;
 			}
