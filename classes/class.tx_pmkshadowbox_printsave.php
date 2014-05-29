@@ -1,53 +1,79 @@
 <?php
+
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2011 Peter Klein <pmk@io.dk>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*  A copy is found in the textfile GPL.txt and important notices to the license
-*  from the author is found in LICENSE.txt distributed with these scripts.
-*
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2011 Peter Klein <pmk@io.dk>
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *  A copy is found in the textfile GPL.txt and important notices to the license
+ *  from the author is found in LICENSE.txt distributed with these scripts.
+ *
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
+/**
+ * Class tx_pmkshadowbox_printsave
+ */
 class tx_pmkshadowbox_printsave {
-
+	/**
+	 * Main function
+	 *
+	 * @return void
+	 */
 	public function main() {
 		$image = $this->cleanGPValue(t3lib_div::_GET('image'));
 		// Check if the requested file has an valid image file extension
-		$allowedExtensions = t3lib_div::trimExplode(',', (strlen($TYPO3_CONF_VARS['GFX']['imagefile_ext']) > 0 ? $TYPO3_CONF_VARS['GFX']['imagefile_ext'] : 'gif,jpg,jpeg,tif,bmp,pcx,tga,png,pdf,ai'), 1);
+		$allowedExtensions = t3lib_div::trimExplode(
+			',', (strlen(
+				$GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+			) > 0 ? $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'] : 'gif,jpg,jpeg,tif,bmp,pcx,tga,png,pdf,ai'), 1
+		);
 		$imageInfo = pathinfo($image);
-		if (!in_array(strtolower($imageInfo['extension']), $allowedExtensions)) die('You are trying to download/print a file, which you don\'t have access to.');
+		if (!in_array(
+			strtolower($imageInfo['extension']), $allowedExtensions
+		)
+		) {
+			die('You are trying to download/print a file, which you don\'t have access to.');
+		}
 
-		if (!is_file(t3lib_div::getFileAbsFileName(str_replace(t3lib_div::getIndpEnv('TYPO3_SITE_URL'),'',$image)))) die('File not found!');
+		if (!is_file(
+			t3lib_div::getFileAbsFileName(str_replace(t3lib_div::getIndpEnv('TYPO3_SITE_URL'), '', $image))
+		)
+		) {
+			die('File not found!');
+		}
 
 		switch ($this->cleanGPValue(t3lib_div::_GET('mode'))) {
 			case 'print':
 				$this->print_image($image);
-			break;
+				break;
 			case 'save':
 				$this->force_download($image);
-			break;
+				break;
 			default:
-			break;
+				break;
 		}
 	}
 
+	/**
+	 * @param string $filename
+	 * @return void
+	 */
 	function print_image($filename) {
 		echo '<html>
 		<head>
@@ -66,30 +92,56 @@ class tx_pmkshadowbox_printsave {
 			</script>
 		</head>
 		<body style="margin:0;padding:0;">
-			<img src="'.$filename.'" style="border:none;cursor:pointer;" onclick="self.close()">
+			<img src="' . $filename . '" style="border:none;cursor:pointer;" onclick="self.close()">
 		</body>
 	</html>';
 	}
 
-	public function force_download($filename, $mimetype='') {
-		$filename = str_replace(t3lib_div::getIndpEnv('TYPO3_SITE_URL'),PATH_site,$filename);
-		if (!file_exists($filename)) return false;
+	/**
+	 * @param string $filename
+	 * @param string $mimetype
+	 * @return bool
+	 */
+	public function force_download($filename, $mimetype = '') {
+		$filename = str_replace(t3lib_div::getIndpEnv('TYPO3_SITE_URL'), PATH_site, $filename);
+		if (!file_exists($filename)) {
+			return FALSE;
+		}
 
-			// Mimetype not set?
-			if (empty($mimetype)) {
-			$file_extension = strtolower(substr(strrchr($filename,"."),1));
-			switch( $file_extension ) {
-				case "pdf": $mimetype="application/pdf"; break;
-				case "exe": $mimetype="application/octet-stream"; break;
-				case "zip": $mimetype="application/zip"; break;
-				case "doc": $mimetype="application/msword"; break;
-				case "xls": $mimetype="application/vnd.ms-excel"; break;
-				case "ppt": $mimetype="application/vnd.ms-powerpoint"; break;
-				case "gif": $mimetype="image/gif"; break;
-				case "png": $mimetype="image/png"; break;
+		// Mimetype not set?
+		if (empty($mimetype)) {
+			$file_extension = strtolower(substr(strrchr($filename, "."), 1));
+			switch ($file_extension) {
+				case "pdf":
+					$mimetype = "application/pdf";
+					break;
+				case "exe":
+					$mimetype = "application/octet-stream";
+					break;
+				case "zip":
+					$mimetype = "application/zip";
+					break;
+				case "doc":
+					$mimetype = "application/msword";
+					break;
+				case "xls":
+					$mimetype = "application/vnd.ms-excel";
+					break;
+				case "ppt":
+					$mimetype = "application/vnd.ms-powerpoint";
+					break;
+				case "gif":
+					$mimetype = "image/gif";
+					break;
+				case "png":
+					$mimetype = "image/png";
+					break;
 				case "jpeg":
-				case "jpg": $mimetype="image/jpg"; break;
-				default: $mimetype="application/force-download";
+				case "jpg":
+					$mimetype = "image/jpg";
+					break;
+				default:
+					$mimetype = "application/force-download";
 			}
 		}
 
@@ -100,28 +152,37 @@ class tx_pmkshadowbox_printsave {
 		header('Pragma: public'); // required
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Cache-Control: private',false); // required for certain browsers
+		header('Cache-Control: private', FALSE); // required for certain browsers
 		header('Content-Transfer-Encoding: binary');
 		header('Content-Type: ' . $mimetype);
 		header('Content-Length: ' . filesize($filename));
-		header('Content-Disposition: attachment; filename="' . basename($filename) . '";' );
+		header('Content-Disposition: attachment; filename="' . basename($filename) . '";');
 
 		// Send data
 		readfile($filename);
 		exit;
 	}
 
+	/**
+	 * @return bool
+	 */
 	private function ob_clean_all() {
-		$ob_active = ob_get_length () !== false;
-		while($ob_active) {
+		$ob_active = ob_get_length() !== FALSE;
+		while ($ob_active) {
 			ob_end_clean();
-			$ob_active = ob_get_length () !== false;
+			$ob_active = ob_get_length() !== FALSE;
 		}
-		return true;
+		return TRUE;
 	}
 
-	// Clean GET/POST values to prevent XSS/PoC attacks
-	private function cleanGPValue($value,$htmlspecialchars = 1) {
+	/**
+	 * Clean GET/POST values to prevent XSS/PoC attacks
+	 *
+	 * @param string $value
+	 * @param int $htmlspecialchars
+	 * @return mixed|string
+	 */
+	private function cleanGPValue($value, $htmlspecialchars = 1) {
 		// Remove HTML tags in value
 		$value = strip_tags($value);
 
@@ -137,12 +198,14 @@ class tx_pmkshadowbox_printsave {
 	}
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_pmkshadowbox_printsave.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_pmkshadowbox_printsave.php']
+) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_pmkshadowbox_printsave.php']);
 }
 
-	// Make instance:
+// Make instance:
 $output = t3lib_div::makeInstance('tx_pmkshadowbox_printsave');
 $output->main();
 

@@ -1,28 +1,28 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Peter Klein (pmk@io.dk)
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*  A copy is found in the textfile GPL.txt and important notices to the license
-*  from the author is found in LICENSE.txt distributed with these scripts.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2010 Peter Klein (pmk@io.dk)
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *  A copy is found in the textfile GPL.txt and important notices to the license
+ *  from the author is found in LICENSE.txt distributed with these scripts.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * This class contains a hook class for modifying the tt_news image markers
@@ -32,26 +32,57 @@
  * @author Peter Klein <pmk@io.dk>
  */
 class tx_ttnews_imageMarker extends tslib_pibase {
-	var $prefixId = "tx_ttnews_imageMarkerHook";		// Same as class name
-	var $scriptRelPath = "class.tx_ttnews_imageMarkerHook.php";	// Path to this script relative to the extension dir.
-	var $extKey = "tt_news";	// The extension key.
+	/**
+	 * Same as class name
+	 *
+	 * @var string
+	 */
+	var $prefixId = 'tx_ttnews_imageMarkerHook';
 
+	/**
+	 * Path to this script relative to the extension dir.
+	 *
+	 * @var string
+	 */
+	var $scriptRelPath = 'class.tx_ttnews_imageMarkerHook.php';
+
+	/**
+	 * The extension key.
+	 *
+	 * @var string
+	 */
+	var $extKey = 'tt_news';
+
+	/**
+	 * @param array $parentMarkerArray
+	 * @param array $row
+	 * @param array $lConf
+	 * @param object $tt_news
+	 * @return array
+	 */
 	function extraItemMarkerProcessor($parentMarkerArray, $row, $lConf, $tt_news) {
 		$tt_news->pi_setPiVarDefaults();
 		$this->pi_loadLL();
-		$this->conf = &$tt_news->conf;
+		$this->conf = & $tt_news->conf;
 
 		if ($tt_news->config['FFimgH'] || $tt_news->config['FFimgW']) {
 			$lConf['image.']['file.']['maxW'] = $tt_news->config['FFimgW'];
 			$lConf['image.']['file.']['maxH'] = $tt_news->config['FFimgH'];
 		}
 
-		$this->makeImageMarkers($row,$lConf,$tt_news,$parentMarkerArray);
+		$this->makeImageMarkers($row, $lConf, $tt_news, $parentMarkerArray);
 
 		return $parentMarkerArray;
 	}
 
-	function makeImageMarkers($row,$lConf,$tt_news,&$parentMarkerArray) {
+	/**
+	 * @param array $row
+	 * @param array $lConf
+	 * @param object $tt_news
+	 * @param array $parentMarkerArray
+	 * @return void
+	 */
+	function makeImageMarkers($row, $lConf, $tt_news, &$parentMarkerArray) {
 		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount'] : 1;
 		if (class_exists('t3lib_utility_Math')) {
 			$imageNum = t3lib_utility_Math::forceIntegerInRange($imageNum, 0, 100);
@@ -69,13 +100,15 @@ class tx_ttnews_imageMarker extends tslib_pibase {
 		reset($imgs);
 
 		if ($textRenderObj == 'displaySingle' || $textRenderObj == 'SINGLE') {
-			$parentMarkerArray = $this->getSingleViewImages($lConf, $imgs, $imgsCaptions, $imgsAltTexts, $imgsTitleTexts, $imageNum, $parentMarkerArray,$tt_news);
+			$parentMarkerArray = $this->getSingleViewImages(
+				$lConf, $imgs, $imgsCaptions, $imgsAltTexts, $imgsTitleTexts, $imageNum, $parentMarkerArray, $tt_news
+			);
 		} else {
 
 			$imageMode = (strpos($textRenderObj, 'LATEST') ? $lConf['latestImageMode'] : $lConf['listImageMode']);
 
 			$suf = '';
-			if (is_numeric(substr($lConf['image.']['file.']['maxW'], - 1))) { // 'm' or 'c' not set by TS
+			if (is_numeric(substr($lConf['image.']['file.']['maxW'], -1))) { // 'm' or 'c' not set by TS
 				if ($imageMode) {
 					switch ($imageMode) {
 						case 'resize2max' :
@@ -91,35 +124,42 @@ class tx_ttnews_imageMarker extends tslib_pibase {
 				}
 			}
 
-				// only insert width/height if it is not given by TS and width/height is empty
-			if ($lConf['image.']['file.']['maxW'] && ! $lConf['image.']['file.']['width']) {
+			// only insert width/height if it is not given by TS and width/height is empty
+			if ($lConf['image.']['file.']['maxW'] && !$lConf['image.']['file.']['width']) {
 				$lConf['image.']['file.']['width'] = $lConf['image.']['file.']['maxW'] . $suf;
 				unset($lConf['image.']['file.']['maxW']);
 			}
-			if ($lConf['image.']['file.']['maxH'] && ! $lConf['image.']['file.']['height']) {
+			if ($lConf['image.']['file.']['maxH'] && !$lConf['image.']['file.']['height']) {
 				$lConf['image.']['file.']['height'] = $lConf['image.']['file.']['maxH'] . $suf;
 				unset($lConf['image.']['file.']['maxH']);
 			}
 
 			$cc = 0;
 			foreach ($imgs as $val) {
-				if ($cc == $imageNum)
+				if ($cc == $imageNum) {
 					break;
+				}
 				if ($val) {
 					$lConf['image.']['altText'] = $imgsAltTexts[$cc];
 					$lConf['image.']['titleText'] = $imgsTitleTexts[$cc];
 					$lConf['image.']['file'] = 'uploads/pics/' . $val;
 					$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = $cc;
 
-					$theImgCode .= $tt_news->local_cObj->IMAGE($lConf['image.']) . $tt_news->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
+					$theImgCode .= $tt_news->local_cObj->IMAGE($lConf['image.']) . $tt_news->local_cObj->stdWrap(
+							$imgsCaptions[$cc], $lConf['caption_stdWrap.']
+						);
 				}
 				$cc++;
 			}
 
 			if ($cc) {
-				$parentMarkerArray['###NEWS_IMAGE###'] = $tt_news->local_cObj->wrap($theImgCode, $lConf['imageWrapIfAny']);
+				$parentMarkerArray['###NEWS_IMAGE###'] = $tt_news->local_cObj->wrap(
+					$theImgCode, $lConf['imageWrapIfAny']
+				);
 			} else {
-				$parentMarkerArray['###NEWS_IMAGE###'] = $tt_news->local_cObj->stdWrap($parentMarkerArray['###NEWS_IMAGE###'], $lConf['image.']['noImage_stdWrap.']);
+				$parentMarkerArray['###NEWS_IMAGE###'] = $tt_news->local_cObj->stdWrap(
+					$parentMarkerArray['###NEWS_IMAGE###'], $lConf['image.']['noImage_stdWrap.']
+				);
 			}
 		}
 	}
@@ -127,15 +167,19 @@ class tx_ttnews_imageMarker extends tslib_pibase {
 	/**
 	 * Fills the image markers for the SINGLE view with data. Supports Optionssplit for some parameters
 	 *
-	 * @param	[type]		$lConf: ...
-	 * @param	[type]		$imgs: ...
-	 * @param	[type]		$imgsCaptions: ...
-	 * @param	[type]		$imgsAltTexts: ...
-	 * @param	[type]		$imgsTitleTexts: ...
-	 * @param	[type]		$imageNum: ...
-	 * @return	array		$markerArray: filled markerarray
+	 * @param array $lConf
+	 * @param array $imgs
+	 * @param array $imgsCaptions
+	 * @param array $imgsAltTexts
+	 * @param array $imgsTitleTexts
+	 * @param int $imageNum
+	 * @param array $markerArray
+	 * @param object $tt_news
+	 * @return array
 	 */
-	function getSingleViewImages($lConf, $imgs, $imgsCaptions, $imgsAltTexts, $imgsTitleTexts, $imageNum, $markerArray,$tt_news) {
+	function getSingleViewImages(
+		$lConf, $imgs, $imgsCaptions, $imgsAltTexts, $imgsTitleTexts, $imageNum, $markerArray, $tt_news
+	) {
 		$marker = 'NEWS_IMAGE';
 		$sViewSplitLConf = array();
 		$tmpMarkers = array();
@@ -164,6 +208,7 @@ class tx_ttnews_imageMarker extends tslib_pibase {
 			$imgsTitleTexts = array_slice($imgsTitleTexts, $astart, $imageNum);
 		}
 
+		$osCount = 0;
 		if ($tt_news->conf['enableOptionSplit']) {
 			if ($lConf['imageMarkerOptionSplit']) {
 				$ostmp = explode('|*|', $lConf['imageMarkerOptionSplit']);
@@ -180,10 +225,11 @@ class tx_ttnews_imageMarker extends tslib_pibase {
 		$cc = 0;
 		$theImgCode = '';
 		foreach ($imgs as $val) {
-			if ($cc == $imageNum)
+			if ($cc == $imageNum) {
 				break;
+			}
 			if ($val) {
-				if (! empty($sViewSplitLConf[$cc])) {
+				if (!empty($sViewSplitLConf[$cc])) {
 					$lConf = $sViewSplitLConf[$cc];
 				}
 
@@ -192,7 +238,9 @@ class tx_ttnews_imageMarker extends tslib_pibase {
 				$lConf['image.']['file'] = 'uploads/pics/' . $val;
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = $cc;
 
-				$imgHtml = $tt_news->local_cObj->IMAGE($lConf['image.']) . $tt_news->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
+				$imgHtml = $tt_news->local_cObj->IMAGE($lConf['image.']) . $tt_news->local_cObj->stdWrap(
+						$imgsCaptions[$cc], $lConf['caption_stdWrap.']
+					);
 
 				if ($osCount) {
 					if ($iC > 1) {
@@ -215,20 +263,27 @@ class tx_ttnews_imageMarker extends tslib_pibase {
 					$markerArray[$mName] = $tt_news->local_cObj->wrap($res['html'], $res['wrap']);
 				}
 			} else {
-				$markerArray['###' . $marker . '###'] = $tt_news->local_cObj->wrap($theImgCode, $lConf['imageWrapIfAny']);
+				$markerArray['###' . $marker . '###'] = $tt_news->local_cObj->wrap(
+					$theImgCode, $lConf['imageWrapIfAny']
+				);
 			}
 		} else {
 			if ($lConf['imageMarkerOptionSplit']) {
 				$m = '_1';
 			}
-			$markerArray['###' . $marker . $m . '###'] = $tt_news->local_cObj->stdWrap($markerArray['###' . $marker . $m . '###'], $lConf['image.']['noImage_stdWrap.']);
+			$markerArray['###' . $marker . $m . '###'] = $tt_news->local_cObj->stdWrap(
+				$markerArray['###' . $marker . $m . '###'], $lConf['image.']['noImage_stdWrap.']
+			);
 		}
 
 		return $markerArray;
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_ttnews_imageMarkerHook.php'])  {
+if (defined(
+		'TYPO3_MODE'
+	) && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_ttnews_imageMarkerHook.php']
+) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_ttnews_imageMarkerHook.php']);
 }
 

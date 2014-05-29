@@ -1,32 +1,33 @@
 <?php
-/***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Stefan Galinski (stefan.galinski@gmail.com)
-*  (c) 2010 Peter Klein (pmk@io.dk)
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*  A copy is found in the textfile GPL.txt and important notices to the license
-*  from the author is found in LICENSE.txt distributed with these scripts.
-*
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
 
-	// unfortunately not automatically loaded
+/***************************************************************
+ *  Copyright notice
+ *
+ *  (c) 2010 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) 2010 Peter Klein (pmk@io.dk)
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *  A copy is found in the textfile GPL.txt and important notices to the license
+ *  from the author is found in LICENSE.txt distributed with these scripts.
+ *
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
+
+// unfortunately not automatically loaded
 require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'resources/jsmin.php');
 
 /**
@@ -38,11 +39,11 @@ require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'resources/jsmin.php');
 class tx_pmkshadowbox_build {
 	/**
 	 * Content Object for Typoscript Operations
-	 * 
+	 *
 	 * @param tslib_cObj
 	 * @var tslib_cObj
 	 */
-	public $cObj = null;
+	public $cObj = NULL;
 
 	/**
 	 * Cache Handler
@@ -50,11 +51,11 @@ class tx_pmkshadowbox_build {
 	 * @property tx_pmkshadowbox_cache
 	 * @var tx_pmkshadowbox_cache
 	 */
-	protected $cacheHandler = null;
+	protected $cacheHandler = NULL;
 
 	/**
 	 * Extension Configuration
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $extensionConfiguration = array();
@@ -72,7 +73,7 @@ class tx_pmkshadowbox_build {
 	 * Note: If no cache handler parameter is given, the method will create a new one!
 	 *
 	 * @param tx_pmkshadowbox_cache $cacheHandler
-	 * @return void
+	 * @throws Exception
 	 */
 	public function __construct($cacheHandler = NULL) {
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
@@ -123,7 +124,7 @@ class tx_pmkshadowbox_build {
 	 * Applies the stdWrap typoscript property on all entries of the given array that
 	 * are suffixed with a dot. The primitive value without a dot is overriden in this case.
 	 *
-	 * @parameters array $configuration typoscript configuration
+	 * @param array $configuration typoscript configuration
 	 * @return array normalized typoscript configuration
 	 */
 	protected function applyStdWrapOn(array $configuration) {
@@ -211,7 +212,7 @@ class tx_pmkshadowbox_build {
 	 * string will be returned.
 	 *
 	 * @param mixed $useSizzle see method description
-	 * @return string 
+	 * @return string
 	 */
 	protected function getCssSelectorSupport($useSizzle) {
 		$sizzle = '';
@@ -227,7 +228,7 @@ class tx_pmkshadowbox_build {
 	 * path based on the TYPO3 root directory. If the file doesn't exists a blank string is
 	 * returned.
 	 *
-	 * @param string $skinModification TYPO3 path to a skin modification directory
+	 * @param string $typo3SkinModificationDirectory TYPO3 path to a skin modification directory
 	 * @return string
 	 */
 	protected function getSkinModificationDirectory($typo3SkinModificationDirectory) {
@@ -237,7 +238,7 @@ class tx_pmkshadowbox_build {
 		} else {
 			$skinModificationDirectory = '';
 		}
-		
+
 		return $skinModificationDirectory;
 	}
 
@@ -364,7 +365,7 @@ class tx_pmkshadowbox_build {
 			$scriptContent .= $content;
 		}
 
-			// the scriptmerger check prevents the minification of the script twice!
+		// the scriptmerger check prevents the minification of the script twice!
 		if ($this->extensionConfiguration['enableJavascriptMinification'] === '1' &&
 			!t3lib_extMgm::isLoaded('scriptmerger')
 		) {
@@ -384,11 +385,12 @@ class tx_pmkshadowbox_build {
 	 * @return void
 	 */
 	protected function copySkinResources($skinModificationDirectory) {
-			// copy the default resources
+		// copy the default resources
 		$absoluteSourceDirectory = PATH_site . $this->sourceDirectory . 'resources/';
 		$directoryHandler = new DirectoryIterator($absoluteSourceDirectory);
 		$allowedFileExtensions = array('png', 'gif', 'jpg', 'css');
 		foreach ($directoryHandler as $fileInfo) {
+			/** @var $fileInfo DirectoryIterator */
 			if ($fileInfo->isFile()) {
 				$fileName = $fileInfo->getFilename();
 				$fileExtension = substr($fileName, strrpos($fileName, '.') + 1);
@@ -400,7 +402,7 @@ class tx_pmkshadowbox_build {
 			}
 		}
 
-			// copy the skin modification resources if available
+		// copy the skin modification resources if available
 		$resourceFolder = PATH_site . $skinModificationDirectory . 'resources/';
 		if (is_dir($resourceFolder)) {
 			$directoryHandler = new DirectoryIterator($resourceFolder);
@@ -462,7 +464,7 @@ class tx_pmkshadowbox_build {
 		$flashExpressInstallScriptName = '';
 		if ($configuration['flashExpressInstallScript'] !== '') {
 			$flashExpressInstallScriptName = '-' . $this->
-				getFileNameWithoutExtension($configuration['flashExpressInstallScript']);
+					getFileNameWithoutExtension($configuration['flashExpressInstallScript']);
 		}
 
 		$buildDirectory = $this->getFileNameWithoutExtension($configuration['adapter']) . '-' .
@@ -521,7 +523,7 @@ class tx_pmkshadowbox_build {
 	 * @return string relative path to the build directory
 	 */
 	public function build($content, array $configuration) {
-			// prepare the configuration (apply stdWrap, fallbacks and existence checks)
+		// prepare the configuration (apply stdWrap, fallbacks and existence checks)
 		$configuration = $this->applyStdWrapOn($configuration);
 
 		$configuration['adapter'] = $this->getAdapter($configuration['adapter']);
@@ -537,17 +539,17 @@ class tx_pmkshadowbox_build {
 		$configuration['language'] = $this->
 			getLanguage($configuration['language'], $configuration['languageFallback']);
 
-			// get the name of the final build directory
+		// get the name of the final build directory
 		$buildDirectory = $this->getNameOfBuildDirectory($configuration);
 		$this->cacheHandler->setBuildDirectory($buildDirectory);
 
-			// an existing cache directory can be delivered immediately
+		// an existing cache directory can be delivered immediately
 		$buildDirectory = $this->cacheHandler->getPathToBuildDirectory();
 		if (file_exists($buildDirectory . 'shadowbox.js')) {
 			return $buildDirectory;
 		}
 
-			// otherwise create a new one
+		// otherwise create a new one
 		$this->createScriptFile(
 			$this->getOrderedScripts($configuration)
 		);
@@ -565,7 +567,10 @@ class tx_pmkshadowbox_build {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_pmkshadowbox_build.php'])  {
+if (defined(
+		'TYPO3_MODE'
+	) && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_pmkshadowbox_build.php']
+) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pmkshadowbox/classes/class.tx_pmkshadowbox_build.php']);
 }
 
