@@ -100,14 +100,18 @@ S.iframe.prototype = {
 			iframeInstance = this;
 		}
 
-		var win = window.frames[iframeInstance.id];
-		if (typeof win !== 'undefined') {
-			if (win.document.body === null) {
-				window.setTimeout(function(){iframeInstance.triggerResize(iframeInstance)}, 10);
-			} else {
-				var dims = setDimensions(iframeInstance.height, iframeInstance.width);
-				iframeInstance.onWindowResize(dims);
+		try {
+			var win = window.frames[iframeInstance.id];
+			if (typeof win !== 'undefined') {
+				if (win.document.body === null) {
+					window.setTimeout(function(){iframeInstance.triggerResize(iframeInstance)}, 10);
+				} else {
+					var dims = setDimensions(iframeInstance.height, iframeInstance.width);
+					iframeInstance.onWindowResize(dims);
+				}
 			}
+		} catch (e) {
+			// catches e.g. security exceptions if the iframe content is not in the same domain
 		}
 	},
 
