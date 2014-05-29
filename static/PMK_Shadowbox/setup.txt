@@ -115,8 +115,8 @@ page.headerData.1233 {
 
 # Code for printing shadowbox HTML (iframe) content.
 [globalVar = GP:print = 2]
-page.headerData.1229 = TEXT
-page.headerData.1229.value (
+	page.headerData.1229 = TEXT
+	page.headerData.1229.value (
 	<script type="text/javascript">
 	/* <![CDATA[ */
 	function printIframeContent() {
@@ -136,13 +136,13 @@ page.headerData.1229.value (
 	}
 	/* ]]> */
 	</script>
-)
+	)
 [global]
 
 // Include all js in footer
 [globalVar = LIT:1 = {$plugin.pmkshadowbox.includeJsInFooter}]
-page.footerData.1231 < page.headerData.1231
-page.headerData.1231 >
-page.footerData.1233 < page.headerData.1233
-page.headerData.1233 >
+	page.footerData.1231 < page.headerData.1231
+	page.headerData.1231 >
+	page.footerData.1233 < page.headerData.1233
+	page.headerData.1233 >
 [global]

@@ -1,7 +1,7 @@
 plugin.pmkshadowbox {
 
 	# Enable options
-	
+
 	# cat=pmkshadowbox/enable/eh; type=boolean; label= Shadowbox mode (tt_products): If set, click-enlarged groups of images in tt_products will be navigable. (Next/Previous buttons ar shown)
 	tt_products.navigable = 1
 
@@ -18,5 +18,4 @@ plugin.pmkshadowbox {
 
 	# cat=pmkshadowbox//on; type=options[imagetitletext,imagealttext,imagecaption]; label= tt_products Caption Field: tt_products field to use as caption inside the Shadowbox.
 	tt_products.captionField = imagetitletext
-
 }

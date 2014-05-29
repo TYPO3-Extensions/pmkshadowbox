@@ -38,44 +38,44 @@ tt_content.image.20.1 {
 }
 
 [compatVersion = 4.5.0]
-tt_content.image.20.1 {
-	titleText.field = {$plugin.pmkshadowbox.imgtext.captionField}
-	titleText.htmlSpecialChars = 1
+	tt_content.image.20.1 {
+		titleText.field = {$plugin.pmkshadowbox.imgtext.captionField}
+		titleText.htmlSpecialChars = 1
 
-	# Removing the default "imageLinkWrap" TS code, and add new one to enable Lightbox effect.
-	imageLinkWrap >
-	imageLinkWrap = 1
-	imageLinkWrap {
-		# Enable linkwrapping if either click-enlarge is selected or a link is defined.
-		enable.field = image_zoom
-		enable.ifEmpty.typolink.parameter.field = image_link
-		enable.ifEmpty.typolink.parameter.listNum.splitChar = 10
-		enable.ifEmpty.typolink.parameter.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
-		enable.ifEmpty.typolink.returnLast = url
+		# Removing the default "imageLinkWrap" TS code, and add new one to enable Lightbox effect.
+		imageLinkWrap >
+		imageLinkWrap = 1
+		imageLinkWrap {
+			# Enable linkwrapping if either click-enlarge is selected or a link is defined.
+			enable.field = image_zoom
+			enable.ifEmpty.typolink.parameter.field = image_link
+			enable.ifEmpty.typolink.parameter.listNum.splitChar = 10
+			enable.ifEmpty.typolink.parameter.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
+			enable.ifEmpty.typolink.returnLast = url
 
-		# Add new typolink wrapping code
-		typolink {
-			target = {$styles.content.links.target}
-			extTarget = {$styles.content.links.extTarget}
+			# Add new typolink wrapping code
+			typolink {
+				target = {$styles.content.links.target}
+				extTarget = {$styles.content.links.extTarget}
 
-			# This returns a link, pointing to the path + name of the original image.
-			# or to the path + name of the resized lightbox image (if maxH or maxW is reached.)
-			parameter.cObject = IMG_RESOURCE
-			parameter.cObject.file.import.data = TSFE:lastImageInfo|origFile
+				# This returns a link, pointing to the path + name of the original image.
+				# or to the path + name of the resized lightbox image (if maxH or maxW is reached.)
+				parameter.cObject = IMG_RESOURCE
+				parameter.cObject.file.import.data = TSFE:lastImageInfo|origFile
 
-			# Except if the linkfield is not empty
-			parameter.override.field = image_link
-			parameter.override.listNum.splitChar = 10
-			parameter.override.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
-			parameter.override.if.isTrue.field = image_link
+				# Except if the linkfield is not empty
+				parameter.override.field = image_link
+				parameter.override.listNum.splitChar = 10
+				parameter.override.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
+				parameter.override.if.isTrue.field = image_link
 
-			# Add the "rel" attribute needed to activate the lightbox effect.
-			ATagParams = rel="shadowbox"
-			ATagParams.override = rel="shadowbox[sb{field:uid}]"
-			ATagParams.override.if.isTrue = {$plugin.pmkshadowbox.imgtext.navigable}
-			ATagParams.insertData = 1
-			ATagParams.if.isTrue.field = image_zoom
+				# Add the "rel" attribute needed to activate the lightbox effect.
+				ATagParams = rel="shadowbox"
+				ATagParams.override = rel="shadowbox[sb{field:uid}]"
+				ATagParams.override.if.isTrue = {$plugin.pmkshadowbox.imgtext.navigable}
+				ATagParams.insertData = 1
+				ATagParams.if.isTrue.field = image_zoom
+			}
 		}
 	}
-}
 [end]

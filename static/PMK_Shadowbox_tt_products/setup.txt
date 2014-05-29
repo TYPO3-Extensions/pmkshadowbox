@@ -2,17 +2,17 @@ temp.imageLinkWrap >
 temp.imageLinkWrap = 1
 temp.imageLinkWrap {
 	enable = 1
-	
+
 	# Add new typolink wrapping code
 	typolink {
 		# Set the title of the A tag, which is used as caption inside the Lightbox
 		title.field = {$plugin.pmkshadowbox.tt_products.captionField}
-				
+
 		# This returns a link, pointing to the path + name of the original image.
 		# or to the path + name of the resized lightbox image (if maxH or maxW is reached.)
 		parameter.cObject = IMG_RESOURCE
 		parameter.cObject.file.import.data = TSFE:lastImageInfo|origFile
-	
+
 		# Add the "rel" attribute needed to activate the lightbox effect.
 		ATagParams = rel="lightbox"
 		ATagParams.override = rel="lightbox[sb{field:uid}]"
@@ -23,19 +23,19 @@ temp.imageLinkWrap {
 
 
 [globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_products.image.shadowboxEnable}]
-# Change "imageLinkWrap" for the "image" object of tt_products
-plugin.tt_products.image.imageLinkWrap >
-plugin.tt_products.image.imageLinkWrap < temp.imageLinkWrap
+	# Change "imageLinkWrap" for the "image" object of tt_products
+	plugin.tt_products.image.imageLinkWrap >
+	plugin.tt_products.image.imageLinkWrap < temp.imageLinkWrap
 [GLOBAL]
 
 [globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_products.listImage.shadowboxEnable}]
-# Change "imageLinkWrap" for the "listImage" object of tt_products
-plugin.tt_products.listImage.imageLinkWrap >
-plugin.tt_products.listImage.imageLinkWrap < temp.imageLinkWrap
+	# Change "imageLinkWrap" for the "listImage" object of tt_products
+	plugin.tt_products.listImage.imageLinkWrap >
+	plugin.tt_products.listImage.imageLinkWrap < temp.imageLinkWrap
 [GLOBAL]
 
 [globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_products.basketImage.shadowboxEnable}]
-# Change "imageLinkWrap" for the "basketImage" object of tt_products
-plugin.tt_products.basketImage.imageLinkWrap >
-plugin.tt_products.basketImage.imageLinkWrap < temp.imageLinkWrap
+	# Change "imageLinkWrap" for the "basketImage" object of tt_products
+	plugin.tt_products.basketImage.imageLinkWrap >
+	plugin.tt_products.basketImage.imageLinkWrap < temp.imageLinkWrap
 [GLOBAL]

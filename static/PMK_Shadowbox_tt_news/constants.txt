@@ -1,7 +1,7 @@
 plugin.pmkshadowbox {
 
 	# Enable options
-	
+
 	# cat=pmkshadowbox/enable/eb; type=boolean; label= Shadowbox mode (tt_news): If set, click-enlarged groups of images in tt_news will be navigable. (Next/Previous buttons ar shown)
 	tt_news.navigable = 1
 

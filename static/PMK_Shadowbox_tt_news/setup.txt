@@ -26,25 +26,25 @@ temp.imageLinkWrap {
 }
 
 [globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_news.displaySingle.shadowboxEnable}]
-# Change "imageLinkWrap" for the "displaySingle" object of tt_news
-plugin.tt_news.displaySingle.image.imageLinkWrap >
-plugin.tt_news.displaySingle.image.imageLinkWrap < temp.imageLinkWrap
+	# Change "imageLinkWrap" for the "displaySingle" object of tt_news
+	plugin.tt_news.displaySingle.image.imageLinkWrap >
+	plugin.tt_news.displaySingle.image.imageLinkWrap < temp.imageLinkWrap
 [GLOBAL]
 
 [globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_news.displayLatest.shadowboxEnable}]
-# Change "imageLinkWrap" for the "displayLatest" object of tt_news
-plugin.tt_news.displayLatest.image.imageLinkWrap >
-plugin.tt_news.displayLatest.image.imageLinkWrap < temp.imageLinkWrap
+	# Change "imageLinkWrap" for the "displayLatest" object of tt_news
+	plugin.tt_news.displayLatest.image.imageLinkWrap >
+	plugin.tt_news.displayLatest.image.imageLinkWrap < temp.imageLinkWrap
 [GLOBAL]
 
 [globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_news.displayList.shadowboxEnable}]
-# Change "imageLinkWrap" for the "displayList" object of tt_news
-plugin.tt_news.displayList.image.imageLinkWrap >
-plugin.tt_news.displayList.image.imageLinkWrap < temp.imageLinkWrap
+	# Change "imageLinkWrap" for the "displayList" object of tt_news
+	plugin.tt_news.displayList.image.imageLinkWrap >
+	plugin.tt_news.displayList.image.imageLinkWrap < temp.imageLinkWrap
 [GLOBAL]
 
 [globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_news.displayList.shadowboxSingleView}]
-# Enable displaying tt_news singleView inside the Lightbox
-plugin.tt_news.displayList.linkTitleField = title
-plugin.tt_news.displayList.linkTitleField.wrap = |" rel="shadowbox;width={$plugin.pmkshadowbox.tt_news.displayList.shadowboxWidth};height={$plugin.pmkshadowbox.tt_news.displayList.shadowboxHeight}
+	# Enable displaying tt_news singleView inside the Lightbox
+	plugin.tt_news.displayList.linkTitleField = title
+	plugin.tt_news.displayList.linkTitleField.wrap = |" rel="shadowbox;width={$plugin.pmkshadowbox.tt_news.displayList.shadowboxWidth};height={$plugin.pmkshadowbox.tt_news.displayList.shadowboxHeight}
 [GLOBAL]
