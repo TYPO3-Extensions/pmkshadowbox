@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="pmkshadowbox_use_cloud_zoom">Use Cloud Zoom</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="pmkshadowbox_use_cloud_zoom">Cloud Zoom benutzen</label>
+		</languageKey>
+	</data>
+</T3locallang>
