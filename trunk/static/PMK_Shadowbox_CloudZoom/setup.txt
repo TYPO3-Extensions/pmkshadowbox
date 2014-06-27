@@ -1,0 +1,16 @@
+page.includeCSS {
+	# add your licenced cloudzoom css here
+	cloudZoom = EXT:pmkshadowbox/resources/cloudZoom/cloudzoom.css
+}
+
+page.includeJS {
+	# add your licenced cloudzoom javascript here
+	cloudZoom = EXT:pmkshadowbox/resources/cloudZoom/cloudzoom.js
+	activateCloudZoom = EXT:pmkshadowbox/resources/public/scripts/activateCloudZoom.js
+}
+
+// @var tt_content.image.20.1 IMAGE
+tt_content.image.20.1 {
+	params.dataWrap = class="cloudzoom" data-cloudzoom="zoomImage: '{TSFE:absRefPrefix}/{TSFE:lastImageInfo|origFile}', zoomPosition: 'inside', zoomOffsetX: 0, captionPosition: 'bottom'"
+	params.if.isTrue.data = field:pmkshadowbox_use_cloud_zoom
+}

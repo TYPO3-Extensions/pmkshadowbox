@@ -1,0 +1,50 @@
+temp.imageLinkWrap >
+temp.imageLinkWrap = 1
+temp.imageLinkWrap {
+	enable = 1
+
+	# Add new typolink wrapping code
+	typolink {
+		# Set the title of the A tag, which is used as caption inside the Lightbox
+		title.field = {$plugin.pmkshadowbox.tt_news.captionField}
+		title.split.token.char = 10
+		title.split.returnKey.data = register : IMAGE_NUM_CURRENT
+		title.htmlSpecialChars = 1
+		#title.if.isTrue = {$plugin.pmkshadowbox.tt_news.enableSplit}
+
+		# This returns a link, pointing to the path + name of the original image.
+		# or to the path + name of the resized lightbox image (if maxH or maxW is reached.)
+		parameter.cObject = IMG_RESOURCE
+		parameter.cObject.file.import.data = TSFE:lastImageInfo|origFile
+
+		# Add the "rel" attribute needed to activate the lightbox effect.
+		ATagParams = rel="shadowbox"
+		ATagParams.override = rel="shadowbox[sb{field:uid}]"
+		ATagParams.override.if.isTrue = {$plugin.pmkshadowbox.tt_news.navigable}
+		ATagParams.insertData = 1
+	}
+}
+
+[globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_news.displaySingle.shadowboxEnable}]
+	# Change "imageLinkWrap" for the "displaySingle" object of tt_news
+	plugin.tt_news.displaySingle.image.imageLinkWrap >
+	plugin.tt_news.displaySingle.image.imageLinkWrap < temp.imageLinkWrap
+[GLOBAL]
+
+[globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_news.displayLatest.shadowboxEnable}]
+	# Change "imageLinkWrap" for the "displayLatest" object of tt_news
+	plugin.tt_news.displayLatest.image.imageLinkWrap >
+	plugin.tt_news.displayLatest.image.imageLinkWrap < temp.imageLinkWrap
+[GLOBAL]
+
+[globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_news.displayList.shadowboxEnable}]
+	# Change "imageLinkWrap" for the "displayList" object of tt_news
+	plugin.tt_news.displayList.image.imageLinkWrap >
+	plugin.tt_news.displayList.image.imageLinkWrap < temp.imageLinkWrap
+[GLOBAL]
+
+[globalVar = LIT:1 = {$plugin.pmkshadowbox.tt_news.displayList.shadowboxSingleView}]
+	# Enable displaying tt_news singleView inside the Lightbox
+	plugin.tt_news.displayList.linkTitleField = title
+	plugin.tt_news.displayList.linkTitleField.wrap = |" rel="shadowbox;width={$plugin.pmkshadowbox.tt_news.displayList.shadowboxWidth};height={$plugin.pmkshadowbox.tt_news.displayList.shadowboxHeight}
+[GLOBAL]

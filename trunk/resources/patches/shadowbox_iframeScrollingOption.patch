@@ -1,0 +1,96 @@
+diff --git a/source/players/iframe.js b/source/players/iframe.js
+index 316857d..e8dd041 100644
+--- a/source/players/iframe.js
++++ b/source/players/iframe.js
+@@ -30,10 +30,20 @@ S.iframe.prototype = {
+      * @public
+      */
+     append: function(body, dims) {
++		var scrolling = '';
++		if (this.obj.iframeScrolling === 'dynamic_noScrollFallback' && (S.isIE6 || S.isIE7)) {
++			scrolling = 'no';
++		} else if (this.obj.iframeScrolling !== 'no' && this.obj.iframeScrolling !== 'yes') {
++			scrolling = 'auto';
++		} else {
++			scrolling = this.obj.iframeScrolling;
++		}
++
+         var html = '<iframe id="' + this.id + '" name="' + this.id + '" height="100%" ' +
+             'width="100%" frameborder="0" marginwidth="0" marginheight="0" ' +
+-            'style="visibility:hidden" onload="this.style.visibility=\'visible\'" ' +
+-            'scrolling="auto"';
++            'style="visibility:hidden;" ' +
++			'onload="this.style.visibility=\'visible\'" ' +
++            'scrolling="' + scrolling + '"';
+ 
+         if (S.isIE) {
+             // prevent brief whiteout while loading iframe source
+@@ -74,6 +84,54 @@ S.iframe.prototype = {
+     onLoad: function() {
+         var win = S.isIE ? get(this.id).contentWindow : window.frames[this.id];
+         win.location.href = this.obj.content;
+-    }
+ 
++			// multiple timeouts with different time gaps to prevent an more performance
++			// intensive intervall
++			// Needed by Chrome and Safari, because they are post-loading content after
++			// the layout was rendered. Unfortunatly the post-rendering triggers scrollbars!
++		var iframeInstance = this;
++		window.setTimeout(function(){iframeInstance.triggerResize(iframeInstance)}, 100);
++		window.setTimeout(function(){iframeInstance.triggerResize(iframeInstance)}, 500);
++		window.setTimeout(function(){iframeInstance.triggerResize(iframeInstance)}, 1000);
++    },
++
++	triggerResize: function(iframeInstance) {
++		if (typeof iframeInstance !== 'object') {
++			iframeInstance = this;
++		}
++
++		var win = window.frames[iframeInstance.id];
++		if (typeof win !== 'undefined') {
++			if (win.document.body === null) {
++				window.setTimeout(function(){iframeInstance.triggerResize(iframeInstance)}, 10);
++			} else {
++				var dims = setDimensions(iframeInstance.height, iframeInstance.width);
++				iframeInstance.onWindowResize(dims);
++			}
++		}
++	},
++
++	onWindowResize: function(dims) {
++		if (this.obj.iframeScrolling !== 'dynamic' &&
++			this.obj.iframeScrolling !== 'dynamic_noScrollFallback'
++		) {
++			return;
++		}
++
++		var element = document.getElementById(this.id);
++		var win = S.isIE ? get(this.id).contentWindow : window.frames[this.id];
++
++		if (dims.oversized) {
++			element.style.overflow = 'auto';
++			if (this.obj.width <= dims.width) {
++				element.style.overflowX = 'hidden';
++			} else if (this.obj.height <= dims.height) {
++				element.style.overflowY = 'hidden';
++			}
++			win.document.body.style.overflow = 'auto';
++		} else {
++			element.style.overflow = 'hidden';
++			win.document.body.style.overflow = 'hidden';
++		}
++	}
+ }
+diff --git a/source/skin.js b/source/skin.js
+index 5424bb7..5db9803 100644
+--- a/source/skin.js
++++ b/source/skin.js
+@@ -781,7 +781,7 @@ K.onWindowResize = function() {
+     adjustHeight(dims.innerHeight, dims.top);
+ 
+     if (player.onWindowResize)
+-        player.onWindowResize();
++        player.onWindowResize(dims);
+ }
+ 
+ S.skin = K;

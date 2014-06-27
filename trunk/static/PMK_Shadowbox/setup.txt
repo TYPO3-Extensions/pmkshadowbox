@@ -1,0 +1,148 @@
+# Shadowbox Build Generation
+#
+# Note: This header data part must always executed before the other ones. Otherwise
+# the register value can't be accessed and we are missing the build path information.
+includeLibs.shadowboxBuild = EXT:pmkshadowbox/classes/class.tx_pmkshadowbox_build.php
+page.headerData.1230 = LOAD_REGISTER
+page.headerData.1230 {
+	buildDirectory {
+		stdWrap.preUserFunc = tx_pmkshadowbox_build->build
+		stdWrap.preUserFunc {
+			useSizzle = {$plugin.pmkshadowbox.useSizzle}
+			players = {$plugin.pmkshadowbox.players}
+			adapter = {$plugin.pmkshadowbox.adapter}
+			skinModificationDirectory = {$plugin.pmkshadowbox.skinModificationDirectory}
+			language.data = TSFE:lang
+			languageFallback = {$plugin.pmkshadowbox.fallbackLanguage}
+			flashPlayer = {$plugin.pmkshadowbox.flashPlayer}
+			flashPlayerYT = {$plugin.pmkshadowbox.flashPlayerYT}
+			flashExpressInstallScript = {$plugin.pmkshadowbox.flashExpressInstallScript}
+		}
+	}
+}
+
+# javascript inclusion
+page.headerData.1231 = TEXT
+page.headerData.1231 {
+	dataWrap = <script type="text/javascript" src="{TSFE:absRefPrefix}{register:buildDirectory}shadowbox.js"></script>
+}
+
+# css inclusion
+page.headerData.1232 = TEXT
+page.headerData.1232 {
+	dataWrap = <link type="text/css" media="all" rel="stylesheet" href="{TSFE:absRefPrefix}{register:buildDirectory}shadowbox.css" />
+}
+
+page.headerData.1233 = COA
+page.headerData.1233 {
+	wrap (
+		<script type="text/javascript">
+		/* <![CDATA[ */
+		|
+		/* ]]> */
+		</script>
+	)
+
+	10 = TEXT
+	10 {
+		value (
+			function shadowBoxInit() {
+				Shadowbox.init({
+					animate: {$plugin.pmkshadowbox.animate},
+					animateFade: {$plugin.pmkshadowbox.animateFade},
+					animSequence: '{$plugin.pmkshadowbox.animSequence}',
+					autoplayMovies: {$plugin.pmkshadowbox.autoplayMovies},
+					continuous: {$plugin.pmkshadowbox.continuous},
+					counterLimit: {$plugin.pmkshadowbox.counterLimit},
+					counterType: '{$plugin.pmkshadowbox.counterType}',
+					displayCounter: {$plugin.pmkshadowbox.displayCounter},
+					displayNav: {$plugin.pmkshadowbox.displayNav},
+					enableKeys: {$plugin.pmkshadowbox.enableKeys},
+					fadeDuration: {$plugin.pmkshadowbox.fadeDuration},
+					flashParams: {$plugin.pmkshadowbox.flashParams},
+					flashVars: {$plugin.pmkshadowbox.flashVars},
+					flashVersion: '{$plugin.pmkshadowbox.flashVersion}',
+					handleOversize: '{$plugin.pmkshadowbox.handleOversize}',
+					handleUnsupported: '{$plugin.pmkshadowbox.handleUnsupported}',
+					initialHeight: {$plugin.pmkshadowbox.initialHeight},
+					initialWidth: {$plugin.pmkshadowbox.initialWidth},
+					modal: {$plugin.pmkshadowbox.modal},
+					onChange: {$plugin.pmkshadowbox.onChange},
+					onClose: {$plugin.pmkshadowbox.onClose},
+					onFinish: {$plugin.pmkshadowbox.onFinish},
+					onOpen: {$plugin.pmkshadowbox.onOpen},
+					overlayColor: '{$plugin.pmkshadowbox.overlayColor}',
+					overlayOpacity: {$plugin.pmkshadowbox.overlayOpacity},
+					resizeDuration: {$plugin.pmkshadowbox.resizeDuration},
+					showOverlay: {$plugin.pmkshadowbox.showOverlay},
+					showMovieControls: {$plugin.pmkshadowbox.showMovieControls},
+					skipSetup: {$plugin.pmkshadowbox.skipSetup},
+					slideshowDelay: {$plugin.pmkshadowbox.slideshowDelay},
+					viewportPadding: {$plugin.pmkshadowbox.viewportPadding},
+					preserveAspectWhileResizing: {$plugin.pmkshadowbox.preserveAspectWhileResizing},
+					troubleElements: {$plugin.pmkshadowbox.troubleElements}
+				});
+			}
+		)
+	}
+
+	20 = TEXT
+	20 {
+		dataWrap = Shadowbox.path = '{TSFE:absRefPrefix}{register:buildDirectory}';
+	}
+
+	30 = TEXT
+	30 {
+		value = shadowBoxInit();
+	}
+
+	# image map initialisation
+	40 = TEXT
+	40 {
+		value (
+			Shadowbox.onReady = function() {
+				var shadowBoxElements = document.getElementsByTagName('area');
+				if (shadowBoxElements.length) {
+					Shadowbox.setup(shadowBoxElements, {$plugin.pmkshadowbox.imageMapOptions});
+				}
+			}
+		)
+
+		override = ;
+		override.if.isTrue = {$plugin.pmkshadowbox.skipImageMapSetup}
+	}
+}
+
+# Code for printing shadowbox HTML (iframe) content.
+[globalVar = GP:print = 2]
+	page.headerData.1229 = TEXT
+	page.headerData.1229.value (
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	function printIframeContent() {
+		try {
+			window.print();
+		} catch (err) {
+			return;
+		}
+
+		window.close();
+	}
+
+	if (window.addEventListener) {
+		window.addEventListener('load', printIframeContent, false);
+	} else if (window.attachEvent) {
+		window.attachEvent('onload', printIframeContent);
+	}
+	/* ]]> */
+	</script>
+	)
+[global]
+
+// Include all js in footer
+[globalVar = LIT:1 = {$plugin.pmkshadowbox.includeJsInFooter}]
+	page.footerData.1231 < page.headerData.1231
+	page.headerData.1231 >
+	page.footerData.1233 < page.headerData.1233
+	page.headerData.1233 >
+[global]

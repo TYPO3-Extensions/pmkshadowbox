@@ -1,0 +1,35 @@
+plugin.pmkshadowbox {
+
+	# Enable options
+
+	# cat=pmkshadowbox/enable/eb; type=boolean; label= Shadowbox mode (tt_news): If set, click-enlarged groups of images in tt_news will be navigable. (Next/Previous buttons ar shown)
+	tt_news.navigable = 1
+
+	# cat=pmkshadowbox/enable/ec; type=boolean; label= Enable Splitting in tt_news: If true, then a small userfunction is included for tt_news. This enables splitting of the caption value by setting the register value "IMAGE_NUM_CURRENT" to the current item number. NOTE. If you are using "dam_ttnews" this option should be turned off!
+	tt_news.enableSplit = 1
+
+	# cat=pmkshadowbox/enable/ed; type=boolean; label= Enable Shadowbox in displaySingle : If set, LightBox effect will be available in tt_news SingleView when you click on an image.
+	tt_news.displaySingle.shadowboxEnable = 1
+
+	# cat=pmkshadowbox/enable/ee; type=boolean; label= Enable Shadowbox in displayLatest : If set, LightBox effect will be available in tt_news LatestView when you click on an image.
+	tt_news.displayLatest.shadowboxEnable = 0
+
+	# cat=pmkshadowbox/enable/ef; type=boolean; label= Enable Shadowbox in displayList : If set, LightBox effect will be available in tt_news ListView when you click on an image.
+	tt_news.displayList.shadowboxEnable = 0
+
+	# cat=pmkshadowbox/enable/eg; type=boolean; label= Enable singleView in Shadowbox : If set, tt_news SingleView will be shown inside a LightBox.
+	tt_news.displayList.shadowboxSingleView = 0
+
+	# Dims options
+
+	# cat=pmkshadowbox/dims/d7; type=int+; label= Shadowbox tt_news Iframe width : Used to set the width of the LightBox if displaying tt_news SingleView in Shadowbox is enabled.
+	tt_news.displayList.shadowboxWidth = 600
+
+	# cat=pmkshadowbox/dims/d8; type=int+; label= Shadowbox tt_news Iframe height : Used to set the height of the LightBox if displaying tt_news SingleView in Shadowbox is enabled.
+	tt_news.displayList.shadowboxHeight = 500
+
+	# Other options
+
+	# cat=pmkshadowbox//om; type=options[imagetitletext,imagealttext,imagecaption]; label= tt_news Caption Field: tt_news field to use as caption inside the Shadowbox.
+	tt_news.captionField = imagetitletext
+}

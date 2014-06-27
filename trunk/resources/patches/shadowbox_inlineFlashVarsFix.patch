@@ -1,0 +1,15 @@
+--- a/resources/shadowbox/source/core.js	Thu Dec 09 17:46:31 2010
++++ b/resources/shadowbox/source/core.js	Thu Dec 09 17:31:03 2010
+@@ -790,7 +790,12 @@
+         each(rel.split(';'), function(i, p) {
+             match = p.match(inlineParam);
+             if (match)
++                if (match[1]=='options') {
++			obj[match[1]] = eval( '('+ match[2] +')' );
++                }
++                else {
+                 obj[match[1]] = match[2];
++                }
+         });
+     }
+ 

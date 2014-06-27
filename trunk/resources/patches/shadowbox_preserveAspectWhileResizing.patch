@@ -1,0 +1,13 @@
+diff --git a/source/skin.js b/source/skin.js
+index 5424bb7..090be65 100644
+--- a/source/skin.js
++++ b/source/skin.js
+@@ -390,7 +390,7 @@ function setDimensions(height, width) {
+ 
+         // only preserve aspect ratio if there is something to display and
+         // it's not draggable
+-        preserveAspect = (S.player && S.options.handleOversize != "drag");
++        preserveAspect = (S.options.preserveAspectWhileResizing && S.player && S.options.handleOversize != "drag");
+ 
+     return S.setDimensions(height, width, maxHeight, maxWidth, topBottom, leftRight, padding, preserveAspect);
+ }

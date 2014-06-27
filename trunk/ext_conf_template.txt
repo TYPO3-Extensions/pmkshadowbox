@@ -1,0 +1,5 @@
+# cat=basic/enable; type=boolean; label=Enable the minification of the javascript build files:Enable this if you want optimium speed. Unfortunatly the minifcation process needs a lot of resources and can oversize your limits.
+enableJavascriptMinification = 0
+
+# cat=basic/enable; type=boolean; label=Enables the CloudZoom checkbox in the tt_content table. Remember that you must include the licenced files yourself!
+enableCloudZoom = 0

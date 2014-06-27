@@ -1,0 +1,143 @@
+plugin.pmkshadowbox {
+	# cat=pmkshadowbox/enable/e1; type=boolean; label= Enable fancy animations?: Set this false to disable all fancy animations (except fades). This can improve the overall effect on computers with poor performance. Defaults to true.
+	animate = 1
+
+	# cat=pmkshadowbox/enable/e2; type=boolean; label= Enable fade animations?: Set this false to disable all fading animations. Defaults to true.
+	animateFade = 1
+
+	# cat=pmkshadowbox/enable/e3; type=boolean; label= Enable modal?: Set this true to prevent mouse clicks on the overlay from closing Shadowbox. Defaults to false.
+	modal = 0
+
+	# cat=pmkshadowbox/enable/e3; type=boolean; label= Autoplay movies?: Set this false to disable automatically playing movies when they are loaded. Defaults to true.
+	autoplayMovies = 1
+
+	# cat=pmkshadowbox/enable/e4; type=boolean; label= Show QuickTime/Windows Media Player controls?: Set this false to disable displaying QuickTime and Windows Media player movie control bars. Defaults to true.
+	showMovieControls = 1
+
+	# cat=pmkshadowbox/enable/e5; type=boolean; label= Display gallery navigation?: Set this false to hide the gallery navigation controls. Defaults to true.
+	displayNav = 1
+
+	# cat=pmkshadowbox/enable/e6; type=boolean; label= Enable "continuous" galleries?: Set this true to enable "continuous" galleries. By default, the galleries will not let a user go before the first image or after the last. Enabling this feature will let the user go directly to the first image in a gallery from the last one by selecting "Next". Defaults to false.
+	continuous = 0
+
+	# cat=pmkshadowbox/enable/e7; type=boolean; label= Display gallery counter?: Set this false to hide the gallery counter. Counters are never displayed on elements that are not part of a gallery. Defaults to true.
+	displayCounter = 1
+
+	# cat=pmkshadowbox/enable/e9; type=boolean; label= Autocall Shadowbox.setup?: Set this true to skip automatically calling Shadowbox.setup when Shadowbox initializes. Defaults to false.
+	skipSetup = 0
+
+	# cat=pmkshadowbox/enable/e8; type=boolean; label= Enable keyboard navigation?: Set this false to disable keyboard navigation of galleries. Defaults to true.
+	enableKeys = 1
+
+	# cat=pmkshadowbox/enable/ec; type=boolean; label= Show overlay?: Determines whether the overlay will be shown at all. Defaults to true.
+	showOverlay = 1
+
+	## Non-Shadowbox enable options!
+
+	# cat=pmkshadowbox/enable/e10; type=boolean; label= Autocall Shadowbox.setup for Image Maps?: Set this true to skip automatically calling Shadowbox.setup for image maps when Shadowbox initializes. Defaults to true.
+	skipImageMapSetup = 1
+
+	# cat=pmkshadowbox/enable/e11; type=boolean; label= Preserve Ascpect While Resizing?: Set this true to enable the preserving of the current aspect while resizing. Defaults to false.
+	preserveAspectWhileResizing = 0
+
+	# cat=pmkshadowbox/enable/ed; type=boolean; label= Use Sizzle?: Set this false to disable loading the Sizzle.js CSS selector library. Note that if you choose not to use Sizzle you may not use CSS selectors to set up your links. Defaults to true.
+	useSizzle = 1
+
+	# cat=pmkshadowbox/enable/ee; type=boolean; label= Include JS in footer: Set this true to include shadowbox.js file inside the footer. Defaults to false.
+	includeJsInFooter = 0
+
+
+
+
+	# cat=pmkshadowbox/dims/d1; type=int+; label= Starting Width: The width of Shadowbox (in pixels) when it first appears on the screen. Defaults to 320.
+	initialWidth = 320
+
+	# cat=pmkshadowbox/dims/d2; type=int+; label= Starting Height: The height of Shadowbox (in pixels) when it first appears on the screen. Defaults to 160.
+	initialHeight = 160
+
+	# cat=pmkshadowbox/dims/d3; type=int+; label= Counter limit: Limits the number of counter links that will be displayed in a "skip" style counter. If the actual number of gallery elements is greater than this value, the counter will be restrained to the elements immediately preceding and following the current element. Defaults to 10.
+	counterLimit = 10
+
+	# cat=pmkshadowbox/dims/d4; type=int+; label= Viewport padding: The amount of padding (in pixels) to maintain around the edge of the browser window. Defaults to 20.
+	viewportPadding = 20
+
+
+
+
+	# cat=pmkshadowbox//o2; type=short; label= Resizing Duration: The duration (in seconds) of the resizing animations. Defaults to 0.35.
+	resizeDuration = 0.35
+
+	# cat=pmkshadowbox//o3; type=short; label= Fade Duration: The duration (in seconds) of the fade animations. Defaults to 0.35.
+	fadeDuration = 0.35
+
+	# cat=pmkshadowbox//o4; type=short; label= Slideshow delay: A delay (in seconds) to use for slideshows. If set to anything other than 0, this value determines an interval at which Shadowbox will automatically proceed to the next piece in the gallery. Defaults to 0.
+	slideshowDelay = 0
+
+	# cat=pmkshadowbox//o5; type=short; label= Opacity level: The opacity to use for the modal overlay. Defaults to 0.5.
+	overlayOpacity = 0.5
+
+	# cat=pmkshadowbox//o6; type=options[wh,hw,sync]; label= Animation sequence: The animation sequence to use when resizing Shadowbox. May be either "wh" (width first, then height), "hw" (height first, then width), or "sync" (both simultaneously). Defaults to "sync".
+	animSequence = sync
+
+	# cat=pmkshadowbox//o7; type=options[default,skip]; label= Counter Type: The mode to use for the gallery counter. May be either "default" or "skip". The default counter is a simple "1 of 5" message. The skip counter displays a separate link to each piece in the gallery, enabling quick navigation in large galleries. Defaults to "default".
+	counterType = default
+
+	# cat=pmkshadowbox//o8; type=options[none,resize,drag]; label= The mode to use for handling content that is too large for the viewport. May be one of "none", "resize", or "drag"  (for images). The "none" setting will not alter the image dimensions, though clipping may occur. Setting this to "resize"  enables on-the-fly resizing of large content. In this mode, the height and width of large, resizable content will be adjusted so that it may still be viewed in its entirety while maintaining its original aspect ratio. The "drag" mode will display an oversized image at its original resolution, but will allow the user to drag it within the view to see portions that may be clipped. See the demo for a demonstration of all three modes of operation. Defaults to "resize".
+	handleOversize = resize
+
+	# cat=pmkshadowbox//o9; type=options[link,remove]; label= The mode to use for handling unsupported media. May be either "link"  or "remove". Media are unsupported when the browser plugin required to display the media properly is not installed. The link option will display a user-friendly error message with a link to a page where the needed plugin can be downloaded. The remove option will simply remove any unsupported gallery elements from the gallery before displaying it. With this option, if the element is not part of a gallery, the link will simply be followed. Defaults to "link".
+	handleUnsupported = link
+
+	# cat=pmkshadowbox//ob; type=string; label= onOpen function: A hook function that will be fired when Shadowbox opens. The single argument of this function will be the current gallery element. Returning boolean false from this callback will prevent Shadowbox from opening.
+	onOpen = function() {}
+
+	# cat=pmkshadowbox//oc; type=string; label= onFinish function: A hook function that will fire when Shadowbox finishes loading the current gallery piece (after all animations are complete). The single argument of this function will be the current gallery element.
+	onFinish = function() {}
+
+	# cat=pmkshadowbox//od; type=string; label= onChange function: A hook function that will be fired when Shadowbox changes from one gallery element to another. The single argument of this function will be the gallery element that is about to be displayed.
+	onChange = function() {}
+
+	# cat=pmkshadowbox//oe; type=string; label= onClose function: A hook function that will be fired when Shadowbox closes. The single argument of this function will be the gallery element that was last displayed.
+	onClose = function() {}
+
+	# cat=pmkshadowbox//z1; type=color; label= Overlay color: The color to use for the modal overlay (in hex). Defaults to "#000000".
+	overlayColor = #000000
+
+	# cat=pmkshadowbox//z2; type=string; label= Flash parameters: A list of parameters (in a JavaScript object) that will be passed to a flash <object>. For a partial list of available parameters, see this page. Only one parameter is specified by default: bgcolor. Defaults to {bgcolor:"#000000"}.
+	flashParams = {bgcolor:"#000000",allowfullscreen:"true"}
+
+	# cat=pmkshadowbox//z3; type=string; label= Minimum Flash Version: The minimum flash version required to play a flash movie (as a string). Defaults to "9.0.0".
+	flashVersion = 9.0.0
+
+	# cat=pmkshadowbox//z4; type=string; label= Trouble Elements: An array of tag names of elements that should be hidden when a modal overlay is used. This option exists because some browsers are not able to display a semi-transparent overlay on top of these elements. These elements will have their visibility restored when Shadowbox closes. Defaults to ["select", "object", "embed", "canvas"].
+	troubleElements = ["select", "object", "embed", "canvas"]
+
+	# cat=pmkshadowbox//z5; type=string; label= Flash Movie Variables : A list of variables (in a JavaScript object) that will be passed to a flash movie as FlashVars. Defaults to {}.
+	flashVars = {}
+
+	## Non-Shadowbox options!
+
+	# cat=pmkshadowbox//o1; type=options[Base=base, Dojo Toolkit=dojo, Ext=ext, MooTools=mootools, Prototype=prototype, YUI=yui, jQuery=jquery]; label= JS Adapter: Although Shadowbox can be used in standalone mode, it's just as easy to use Shadowbox with your JavaScript library of choice for a given project. This is accomplished using adapters. An adapter is a small file that tells Shadowbox which methods to call on the underlying framework to achieve some common purpose such as querying the DOM or handling events.
+	adapter = base
+
+	# cat=pmkshadowbox//oj; type=string; label= Players: Shadowbox supports a wide range of media formats. However, you may not need to display all of the supported formats on your page. For this purpose, several media "player" classes have been created that are able to display different types of content. Available "players" (See manual for more info.): flv, html, iframe, img, qt, swf, wmp.
+	players = flv, html, iframe, img, qt, swf, wmp
+
+	# cat=pmkshadowbox//ok; type=string; label= Fallback Language: You can define the fallback language of the shadowbox script. The fallback is used if the variable config.language or a language file doesn't exists. Defaults to "en".
+	fallbackLanguage = en
+
+	# cat=pmkshadowbox//o0; type=string; label= Initial Options for ImageMap Links: The shadowbox must be enabled in a different way for image maps, because the rel attribute is forbidden for area tags. We handle that by adding an initial shadowbox setup call for image maps. If you don't add some options here, then the defaults are used. You can change the options for each area tag by applying the shadowbox function call (Shadowbox.setup(document.getElementsByTagName('area'), {})) with your new options inside the curly braces before each area tag. Default to "{}". Example: "player:'iframe',width:805,height:500"
+	imageMapOptions = {}
+
+	# cat=pmkshadowbox//o1; type=options[classic=, closeOnTop=EXT:pmkshadowbox/resources/skinModifications/closeOnTop/, web3=EXT:pmkshadowbox/resources/skinModifications/web3/, web3WithSave=EXT:pmkshadowbox/resources/skinModifications/web3WithSave/]; label= Skin Modification: Just select an option if you want a special skin modification. By default we are using the classic shadowbox theme.
+	skinModificationDirectory =
+
+	# cat=pmkshadowbox//o2; type=string; label= Flash Player: You can change the default player with this option. You must enter the path relative to your website root. The EXT: syntax is allowed and the configuration defaults to a blank string (default flash player).
+	flashPlayer =
+
+	# cat=pmkshadowbox//o3; type=string; label= Flash Player YouTube companion: You can change the default player with this option. You must enter the path relative to your website root. The EXT: syntax is allowed and the configuration defaults to a blank string (default flash player companion).
+	flashPlayerYT =
+
+	# cat=pmkshadowbox//o4; type=string; label= Flash Express Install Script: If you need to change the flash express install script, you can use this option to enter an alternative. The value must be a relative path to the website root and defaults to a blank string (default express install script).
+	flashExpressInstallScript =
+}

@@ -1,0 +1,26 @@
+Index: resources/shadowbox/source/core.js
+===================================================================
+--- resources/shadowbox/source/core.js	(revision 1148)
++++ resources/shadowbox/source/core.js	(working copy)
+@@ -779,7 +779,7 @@
+         obj.player = S.getPlayer(obj.content);
+ 
+     // HTML options always trump JavaScript options, so do these last
+-    var rel = link.getAttribute("rel");
++    var rel = link.getAttribute("rel") || link.getAttribute('data-rel');
+     if (rel) {
+         // extract gallery name from shadowbox[name] format
+         var match = rel.match(galleryName);
+Index: resources/shadowbox/source/cache.js
+===================================================================
+--- resources/shadowbox/source/cache.js	(revision 1148)
++++ resources/shadowbox/source/cache.js	(working copy)
+@@ -41,7 +41,7 @@
+     if (!selector) {
+         var rel;
+         each(document.getElementsByTagName("a"), function(i, el) {
+-            rel = el.getAttribute("rel");
++            rel = el.getAttribute("rel") || el.getAttribute('data-rel');
+             if (rel && relAttr.test(rel))
+                 links.push(el);
+         });

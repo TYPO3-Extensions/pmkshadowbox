@@ -1,0 +1,21 @@
+plugin.pmkshadowbox {
+
+	# Enable options
+
+	# cat=pmkshadowbox/enable/eh; type=boolean; label= Shadowbox mode (tt_products): If set, click-enlarged groups of images in tt_products will be navigable. (Next/Previous buttons ar shown)
+	tt_products.navigable = 1
+
+	# cat=pmkshadowbox/enable/ei; type=boolean; label= Enable Shadowbox on image : If set, LightBox effect will be available in tt_products image when you click on an image.
+	tt_products.image.shadowboxEnable = 1
+
+	# cat=pmkshadowbox/enable/ej; type=boolean; label= Enable Shadowbox on listImage : If set, LightBox effect will be available in tt_products listImage when you click on an image.
+	tt_products.listImage.shadowboxEnable = 0
+
+	# cat=pmkshadowbox/enable/ek; type=boolean; label= Enable Shadowbox on basketImage : If set, LightBox effect will be available in tt_products basketImage when you click on an image.
+	tt_products.basketImage.shadowboxEnable = 0
+
+	# Other options
+
+	# cat=pmkshadowbox//on; type=options[imagetitletext,imagealttext,imagecaption]; label= tt_products Caption Field: tt_products field to use as caption inside the Shadowbox.
+	tt_products.captionField = imagetitletext
+}

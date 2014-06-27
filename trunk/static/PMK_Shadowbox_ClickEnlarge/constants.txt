@@ -1,0 +1,7 @@
+plugin.pmkshadowbox {
+	# cat=pmkshadowbox/enable/ea; type=boolean; label= Shadowbox mode (tt_content): If set, click-enlarged groups of images will be navigable. (Next/Previous buttons ar shown)
+	imgtext.navigable = 1
+
+	# cat=pmkshadowbox//oh; type=options[titleText,altText,imagecaption]; label= tt_content Caption Field: tt_content field to use as caption inside the Shadowbox.
+	imgtext.captionField = titleText
+}

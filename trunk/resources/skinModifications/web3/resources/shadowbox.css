@@ -1,0 +1,195 @@
+/**
+ * CSS styles for Shadowbox.
+ */
+
+/* typography */
+#sb-title-inner, #sb-info-inner, #sb-loading-inner, div.sb-message {
+  font-family: "HelveticaNeue-Light","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: 200;
+  color: #4d4d4d;
+}
+
+/* container, overlay, & wrapper */
+#sb-container {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  text-align: left;
+  visibility: hidden;
+  display: none;
+}
+#sb-overlay {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+#sb-wrapper {
+  position: absolute;
+  visibility: hidden;
+  width: 100px; /* explicit width helps offset children calculate their width */
+}
+#sb-wrapper-inner {
+  position: relative;
+  border: 1px solid #303030;
+  overflow: hidden;
+  height: 100px; /* explicit height helps offset children calculate their height */
+}
+#sb-border {
+  position: relative;
+  background-color: #fff;
+  border: 10px solid #fff;
+  border-radius: 10px;
+  -webkit-border-radius:  10px;
+  -moz-border-radius:  10px;
+
+  box-shadow: 10px 10px 15px #111;
+  -webkit-box-shadow: 10px 10px 15px #111;
+  -moz-box-shadow: 10px 10px 15px #111;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#111111, direction=135, strength=10);
+}
+
+/* body */
+#sb-body {
+  position: relative;
+  height: 100%;
+}
+#sb-body-inner {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+#sb-player.html {
+  height: 100%;
+  overflow: auto; /* make html content scrollable */
+}
+#sb-body img {
+  border: none;
+}
+
+/* loading */
+#sb-loading {
+  position: relative;
+  height: 100%;
+}
+#sb-loading-inner {
+  position: absolute;
+  font-size: 14px;
+  line-height: 32px;
+  height: 32px;
+  top: 50%;
+  margin-top: -12px;
+  width: 100%;
+  text-align: center;
+}
+#sb-loading-inner span {
+  background: url(loading.gif) no-repeat;
+  padding-left: 34px;
+  display: inline-block;
+}
+#sb-body, #sb-loading {
+  background-color: #fff; /* should match loading image background color */
+}
+
+/* title & info */
+#sb-title, #sb-info {
+  position: relative;
+  margin: 0; /* these must have no vertical margin or padding */
+  padding: 0;
+  overflow: hidden;
+}
+
+#sb-title-inner {
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+#sb-info-inner {
+  font-size: 12px;
+}
+
+/* nav */
+#sb-nav {
+  float: left;
+  height: 14px;
+  padding-left: 2px;
+}
+#sb-nav2 {
+	float: right;
+	height: 22px;
+	width: 22px;
+}
+#sb-nav a {
+  display: block;
+  float: left;
+  height: 14px;
+  width: 14px;
+  margin-left: 3px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+}
+#sb-nav2 a#sb-nav-close {
+  display: block;
+  background: url(nav.png) no-repeat -56px 0;
+  margin: 6px 3px 0 0;
+  height: 22px;
+  width: 22px;
+  cursor: pointer;
+}
+#sb-nav2 a#sb-nav-close:hover {
+  background-position: -56px -22px;
+}
+#sb-nav-next {
+  background: url(nav.png) no-repeat -14px 0;
+}
+#sb-nav-next:hover {
+  background-position: -14px -14px;
+}
+#sb-nav-previous {
+  background: url(nav.png) no-repeat 0 0;
+}
+#sb-nav-previous:hover {
+  background-position: 0 -14px;
+}
+#sb-nav-play {
+  background: url(nav.png) no-repeat -28px 0;
+}
+#sb-nav-play:hover {
+  background-position: -28px -14px;
+}
+#sb-nav-pause {
+  background: url(nav.png) no-repeat -42px 0;
+}
+#sb-nav-pause:hover {
+  background-position: -42px -14px;
+}
+
+/* counter */
+#sb-counter {
+  float: left;
+  padding: 0 4px 0 0;
+}
+#sb-counter a {
+  padding: 0 4px 0 0;
+  text-decoration: none;
+  cursor: pointer;
+  color: #fff;
+}
+#sb-counter a.sb-counter-current {
+  text-decoration: underline;
+}
+
+/* messages */
+div.sb-message {
+  font-family: Arial,Helvetica,sans-serif;
+  font-weight:bold;
+  font-size: 12px;
+  padding: 10px;
+  text-align: center;
+}
+div.sb-message a:link, div.sb-message a:visited {
+  color: #fff;
+  text-decoration: underline;
+}
