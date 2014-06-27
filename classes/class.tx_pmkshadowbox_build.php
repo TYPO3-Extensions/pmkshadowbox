@@ -363,11 +363,9 @@ class tx_pmkshadowbox_build {
 
 		// the scriptmerger check prevents the minification of the script twice!
 		if ($this->extensionConfiguration['enableJavascriptMinification'] === '1' &&
-			!t3lib_extMgm::isLoaded('scriptmerger')
+			!t3lib_extMgm::isLoaded('scriptmerger') && t3lib_div::compat_version('6.0')
 		) {
-			if (!class_exists('JSMin')) {
-				require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'resources/jsmin.php');
-			}
+			require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'resources/jsmin.php');
 			$scriptContent = JSMin::minify($scriptContent);
 		}
 
