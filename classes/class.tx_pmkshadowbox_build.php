@@ -27,9 +27,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// unfortunately not automatically loaded
-require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'resources/jsmin.php');
-
 /**
  * This class contains methods for building up the shadowbox script.
  *
@@ -37,6 +34,7 @@ require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'resources/jsmin.php');
  * @author Peter Klein <pmk@io.dk>
  */
 class tx_pmkshadowbox_build {
+
 	/**
 	 * Content Object for Typoscript Operations
 	 *
@@ -367,6 +365,9 @@ class tx_pmkshadowbox_build {
 		if ($this->extensionConfiguration['enableJavascriptMinification'] === '1' &&
 			!t3lib_extMgm::isLoaded('scriptmerger')
 		) {
+			if (!class_exists('JSMin')) {
+				require_once(t3lib_extMgm::extPath('pmkshadowbox') . 'resources/jsmin.php');
+			}
 			$scriptContent = JSMin::minify($scriptContent);
 		}
 
@@ -462,7 +463,7 @@ class tx_pmkshadowbox_build {
 		$flashExpressInstallScriptName = '';
 		if ($configuration['flashExpressInstallScript'] !== '') {
 			$flashExpressInstallScriptName = '-' . $this->
-					getFileNameWithoutExtension($configuration['flashExpressInstallScript']);
+				getFileNameWithoutExtension($configuration['flashExpressInstallScript']);
 		}
 
 		$buildDirectory = $this->getFileNameWithoutExtension($configuration['adapter']) . '-' .
@@ -531,11 +532,11 @@ class tx_pmkshadowbox_build {
 		$configuration['flashPlayer'] = $this->getFlashPlayer($configuration['flashPlayer']);
 		$configuration['flashPlayerYT'] = $this->getFlashPlayerYT($configuration['flashPlayerYT']);
 		$configuration['flashExpressInstallScript'] = $this->
-			getFlashExpressInstallScript($configuration['flashExpressInstallScript']);
+		getFlashExpressInstallScript($configuration['flashExpressInstallScript']);
 		$configuration['skinModificationDirectory'] = $this->
-			getSkinModificationDirectory($configuration['skinModificationDirectory']);
+		getSkinModificationDirectory($configuration['skinModificationDirectory']);
 		$configuration['language'] = $this->
-			getLanguage($configuration['language'], $configuration['languageFallback']);
+		getLanguage($configuration['language'], $configuration['languageFallback']);
 
 		// get the name of the final build directory
 		$buildDirectory = $this->getNameOfBuildDirectory($configuration);
