@@ -7,7 +7,7 @@
     
     Downloaded on Jun 27, 2014 by account #TRIAL USER
     License Key: N/A
-    Licensed website(s): 1.akdb.elementare-teilchen.de
+    Licensed website(s): <DOMAIN FOR TRIAL USAGE HERE>
 */
 (new window['\x46\x75\x6E\x63\x74\x69\x6F\x6E'](['q.CloudZoom=d;d.Na()})(jQuery);;',
 'var b=this.zoom.a.offset();this.zoom.options.zoomFlyOut?this.b.animate({left:b.left+this.zoom.d/2,top:b.top+this.zoom.c/2,opacity:0,width:1,height:1},{duration:this.zoom.options.animationTime,step:function(){d.browser.webkit&&a.b.width(a.b.width())},complete:function(){a.b.remove()}}):this.b.animate({opacity:0},{duration:this.zoom.options.animationTime,complete:function(){a.b.remove()}})};',

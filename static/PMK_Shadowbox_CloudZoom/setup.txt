@@ -1,5 +1,10 @@
-page.includeCSS.cloudZoom = EXT:pmkshadowbox/resources/cloudZoom/cloudzoom.css
+page.includeCSS {
+	# add your licenced cloudzoom css here
+	cloudZoom = EXT:pmkshadowbox/resources/cloudZoom/cloudzoom.css
+}
+
 page.includeJS {
+	# add your licenced cloudzoom javascript here
 	cloudZoom = EXT:pmkshadowbox/resources/cloudZoom/cloudzoom.js
 	activateCloudZoom = EXT:pmkshadowbox/resources/public/scripts/activateCloudZoom.js
 }
